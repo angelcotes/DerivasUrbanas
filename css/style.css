@@ -1,0 +1,95 @@
+*{
+	width: 100%;
+	max-height: 1000px;
+	font-weight: normal;
+	font-family: Trebuchet;
+    font-size: 20px;
+}
+html{
+	width: 100%;
+	height: 1000px;
+}
+li{
+	color: black;
+}
+.sub_menu a{
+	font-family: Trebuchet;
+	padding: 10px;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+	font-size: 1.5em;
+	display: block;
+}
+table{
+	color: black;
+}
+.sub_menu a:hover{
+	font-family: Trebuchet;
+	color: white;
+	text-decoration: none;
+	font-size: 1.5em;
+	background-color: #610B0B;
+}
+.sub_menu a:focus{
+	font-family: Trebuchet;
+	text-decoration: none;
+	color: white;
+}
+p{
+	font-size: 20px;
+}
+h1{
+	padding: 10px;
+	margin: 0px;
+    text-align: center;
+    color: white;
+}
+.menu-fixed{
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+}
+.home_text{
+
+	color: black;
+    margin-top: 50px;
+    align-content: left;
+}
+.resize{
+	margin-top: 50px;
+}
+.pdf{
+	width: 100%;
+	height: 830px;
+}
+.sub_menu{
+	padding: 0px;
+	background-color: red;
+}
+.row{
+	padding: 0px;
+	margin: 0px;
+}
+.container-fluid{
+	padding: 0px;
+}
+.contenido{
+	margin-top: 50px;
+}
+#vinculo{
+	color: black;
+}
+#banner .col-xs-12,.col-lg-12,.col-md-12{
+	width: 100%;
+	padding: 0px;
+}
+#profile{
+	width: 100%;
+}
+#card_presentation{
+	margin-top: 10px;
+}
+#title{
+	text-align: center;
+}
