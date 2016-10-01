@@ -1,13 +1,49 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <a class="navbar-brand" href="#/home">Proyecto</a>
+  </div>
+</nav>
 <div class="nopadding col-lg-12 col-md-12 col-sm-12 col-xs-12">
-  <div class="photo img01" data-stellar-background-ratio="0.4" >
-    <div class="blurred-background-image"></div>
-    <div class="content">
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 data">
-         <p class="home_text">El Centro para la Excelencia Docente (CEDU) es el encargado de apoyar a los profesores de Uninorte en el desarrollo de su quehacer pedagógico a través de programas, servicios y recursos destinados a fomentar la excelencia e innovación en la enseñanza para facilitar el aprendizaje de los estudiantes. Dentro de los programas que ofrecemos se cuentan aquellos con fondos concursables para innovación y mejoramiento pedagógico, uno de los cuales es la convocatoria de Laboratorios Pedagógicos.<br><br>
-         Esta convocatoria está dirigida a todos los docentes de Uninorte (tiempo completo, medio tiempo y catedráticos) que hayan implementado o quieran implementar cambios en la planeación, desarrollo o evaluación de sus clases y evaluar sus resultados en el aprendizaje de los estudiantes.<br><br>
-         Para aplicar no es necesario haber implementado y evaluado la propuesta; tan sólo se requiere tener una idea para madurar y desarrollarla en compañía del equipo del CEDU durante un año.<br><br>
-         A partir del 2016 los Laboratorios Pedagógicos se convocan anualmente.</p>
-      </div>
+  <div class="container-fluid"> 
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8 col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-2" id="logIn">
+        <form name="frm">
+          <div class="form-group">
+            <label>User name</label>
+            <div>
+              <input 
+                type="email"
+                class="form-control" 
+                placeholder="Email@uninorte.edu.co" 
+                ng-model="user.email" 
+                id="username" 
+                name="email" 
+                required>
+                <div class="alert alert-warning" role="alert" ng-show="frm.email.$error.email">Ingrese un email valido</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div>
+              <input 
+                type="password" 
+                class="form-control" 
+                placeholder="Password" 
+                ng-model="user.password" 
+                name="password" 
+                id="password" 
+                required>
+                <div class="alert alert-warning" role="alert" ng-show="frm.password.$pristine && frm.password.$error.required">Ingrese una contraseña</div>
+            </div>
+          </div>
+          <div class="row btn_view">
+            <button type="submit" class="btn btn-primary btn_log" ng-click="signIn()" ng-disable="frm.$invalid">Log In</button>
+            <a class="btn btn-primary btn_log" href="#/signIn">Sign Up</a>
+            <a class="btn btn-primary btn_log" href="#/view_activity">Forgot Password?</a>
+          </div>
+        </form>
+      </div>      
     </div>
   </div>
 </div>
