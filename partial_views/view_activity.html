@@ -1,0 +1,71 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex6-collapse">
+      <span class="sr-only">Desplegar navegación</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#/home">Menu</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="navbar-collapse navbar-ex6-collapse collapse" style="height: 1px;">
+    <ul class="nav navbar-nav">
+      <li><a href="#/courses">Cursos</a></li>
+      <li><a href="#/students">Estudiantes</a></li>
+      <li class="active" ><a href="#/activity">Actividades</a></li>
+      <li><a href="">Grupos</a></li>
+      <li><a href="">Salir</a></li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+<div class="nopadding col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <div class="container-fluid">
+    <div class="offset1 span8 pull-right">
+      <button type="submit" class="btn btn-primary" onclick="window.location.href='http://localhost:8080/Documents/Cedu/Blessed/Derivas%20urbanas/#/view_activity'" style="
+    margin-right: 20px;"><i class="fa fa-plus" aria-hidden="true" ></i></button>
+    </div>  
+    <div class="row mapa_vista" ng-controller="mapa">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div class="thumbnail" id="mapa_vista">
+            <div class="caption">
+              <h3 id="banner">holahola</h3>
+            </div>
+          </div>
+        </div>    
+        <div class="row col-lg-6 col-md-6 col-sm-6 col-xs-6 " id="coordinates">
+          <div class="row col-lg-6 col-md-6 col-sm-10 col-xs-12 ">
+            <h2>Center point</h2>
+            <div class="form-group">
+              <label>Latitud</label>
+              <input type="number" class="form-control" placeholder="11.0130" id ="Latitude">
+            </div>
+            <div class="form-group">
+              <label>Longitud</label>
+              <input type="number" class="form-control" placeholder="-74.8276" id ="Longitude">
+            </div>
+            <div class="form-group">
+              <label>Rango (Mts)</label>
+              <input type="number" class="form-control" placeholder="20" id ="Radius">
+            </div>
+            <div class="form-group">
+              <label>Inicio</label>
+              <input type="datetime-local" class="form-control" id ="Latitude">
+            </div>
+            <div class="form-group">
+              <label>Final</label>
+              <input type="datetime-local" class="form-control" id ="Longitude">
+            </div>
+            <div class="form-group">
+              <label>Duracion (Mns)</label>
+              <input type="number" class="form-control" id ="Radius" placeholder="120">
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+</div>
