@@ -3,22 +3,28 @@
 angular.module('vista')
 .factory('ViewActiv', function ($http, $location, BASE_URL, StorageService) {
   var data_Credencial = {};
+  var url = 'courses';
 
   data_Credencial.mostrarCursos = function () {
-    var credentials = StorageService.get('headers')
-    console.log(credentials);
-    return $http.get(BASE_URL + 'courses',{'headers': credentials})
+    var credentials = StorageService.get('headers');
+    return $http.get(BASE_URL + url,{'headers': credentials})
              
   };
   data_Credencial.crearCurso = function (dataCurso){
-    $http.post(BASE_URL + 'courses', {'headers:': StorageService.get('headers'), 'data': dataCurso})
-      .then(
-        function success(response) {
-          return response;
-        }, function error(response){
-          return null;
-        }
-      );
+    var dataFinal = {
+      name: dataCurso.name,
+      period: dataCurso.period,
+      id: StorageService.get('currentUser').id
+    };
+    return $http({
+      method: 'POST',
+      url: BASE_URL + url,
+      data: dataCurso,
+      headers: StorageService.get('headers')
+    })
+  };
+  data_Credencial.EliminarCurso = function (dataCurso){
+    return $http.delete(BASE_URL + url + '/' + dataCurso.id, {'headers': StorageService.get('headers'), 'data': dataCurso})
   };
   return data_Credencial;
 });

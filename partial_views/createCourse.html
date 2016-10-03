@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h3>Crear Curso</h3>
+</div>
+<div class="modal-body">
+  <form name="frm">
+	  <div class="form-group">
+	    <label>Nombre del Curso</label>
+	    <div>
+	      <input 
+	        type="text"
+	        class="form-control" 
+	        placeholder="Materia" 
+	        ng-model="course.name" 
+	        id="namecourse" 
+	        name="namecourse" 
+	        required>
+	        <div class="alert alert-warning" role="alert" ng-show="frm.namecourse.$error.required">Ingrese un nombre</div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label>Periodo</label>
+	    <div>
+	      <input 
+	        type="text"
+	        class="form-control" 
+	        placeholder="Materia" 
+	        ng-model="course.period" 
+	        id="periodcourse" 
+	        name="periodcourse" 
+	        required>
+	        <div class="alert alert-warning" role="alert" ng-show="frm.periodcourse.$error.required">Ingrese un periodo</div>
+	    </div>
+	  </div>
+	</form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="cancelar()">cerrar</button>
+  <button class="btn btn-primary" ng-click="crearCursoModal()">aceptar</button>
+</div>

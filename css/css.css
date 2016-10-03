@@ -1,6 +1,12 @@
 h2{
 	margin-top: 0px;
 }
+.navbar-right {
+    margin-right: 0px;
+}
+.navbar-fixed-top .navbar-collapse {
+    max-height: 50px;
+}
 .container{
 	width: 100%;
 	margin: 0px;
@@ -25,13 +31,23 @@ h2{
     width: 100%;
 }
 #add{
-	padding: 10px;
+	padding: 5px;
 }
 #content-ng{
 	margin-top: 60px;
 }
-@media screen and (max-width: 600px){
+#curso{
+	width: 320px;
+}
+@media screen and (max-width: 770px){
 	#mapa_vista{
 		width: 100%;
+	}
+	#curso{
+		width: 320px;
+	}
+	.navbar-fixed-top .navbar-collapse {
+	    max-height: 350px;
+	    background: #dcdcdc;
 	}
 }

@@ -1,7 +1,6 @@
 'use strict';
 angular.module('vista')
-  .controller('LoginCtrl', function ($scope, AuthService) {
-
+  .controller('LoginCtrl', function ($scope, AuthService ) { 
     $scope.signIn = function () {      
       AuthService.login($scope.user);
     };

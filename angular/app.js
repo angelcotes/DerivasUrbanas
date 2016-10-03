@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('vista', ['ngRoute', 'ngStorage'])
+angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap'])
 .constant('BASE_URL', 'http://localhost:3000/')
 .config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.useXDomain = true;
