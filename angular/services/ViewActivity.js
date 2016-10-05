@@ -14,11 +14,19 @@ angular.module('vista')
     var dataFinal = {
       name: dataCurso.name,
       period: dataCurso.period,
-      id: StorageService.get('currentUser').id
+      user_id: StorageService.get('currentUser').id
     };
     return $http({
       method: 'POST',
       url: BASE_URL + url,
+      data: dataCurso,
+      headers: StorageService.get('headers')
+    })
+  };  
+  data_Credencial.editarCurso = function (dataCurso) {
+    return $http({
+      method: 'PUT',
+      url: BASE_URL + url + '/' + dataCurso.id,
       data: dataCurso,
       headers: StorageService.get('headers')
     })

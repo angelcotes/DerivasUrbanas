@@ -31,7 +31,8 @@ angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap'])
         templateUrl: 'partial_views/contact.html'
     })
     .when('/courses',{
-        templateUrl: 'partial_views/courses.html'
+        templateUrl: 'partial_views/courses.html',
+        controller: 'activityCtrl as activC'
     })
     .when('/home',{
         templateUrl: 'partial_views/home.html',

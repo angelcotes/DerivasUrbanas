@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3>Crear Curso</h3>
+  <h3>Editar Curso</h3>
 </div>
 <div class="modal-body">
   <form name="frm">
@@ -23,7 +23,7 @@
 	      <input 
 	        type="text"
 	        class="form-control" 
-	        placeholder="Periodo" 
+	        placeholder="Materia" 
 	        ng-model="course.period" 
 	        id="periodcourse" 
 	        name="periodcourse" 
@@ -35,5 +35,5 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn" ng-click="cancelar()">cerrar</button>
-  <button class="btn btn-primary" ng-click="crearCursoModal()">aceptar</button>
+  <button class="btn btn-primary" ng-click="edit(course)">aceptar</button>
 </div>
