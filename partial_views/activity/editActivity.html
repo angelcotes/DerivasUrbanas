@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h1>Editar Actividad</h1>
+</div><!-- /.modal -->
+<div class="modal-body">
+	<div class="thumbnail">
+        <div id="map-canvas" style="width: 100%; height: 500px;"></div>
+		<div class="caption">
+	      <h2>Datos</h2>
+	      <div class="form-group">
+	        <label>Nombre</label>
+	        <input type="text" class="form-control" placeholder="Actividad" id="name" ng-model="actividad.name_activity" ng-value="{{actividad.name_activity}}">
+	      </div>
+	      <div class="form-group">
+	        <label>Latitud</label>
+	        <input type="number" class="form-control" placeholder="11.0130" id ="Latitude" ng-model="actividad.latitude">
+	      </div>
+	      <div class="form-group">
+	        <label>Longitud</label>
+	        <input type="number" class="form-control" placeholder="-74.8276" id ="Longitude" ng-model="actividad.longitude">
+	      </div>
+	      <div class="form-group">
+	        <label>Rango (Mts)</label>
+	        <input type="number" class="form-control" placeholder="20" id ="Radius" ng-model="actividad.range">
+	      </div>
+	      <div class="form-group">
+	        <label>Inicio</label>
+	        <input type="datetime-local" class="form-control" id="startDate" ng-model="actividad.start_date">
+	      </div>
+	      <div class="form-group">
+	        <label>Final</label>
+	        <input type="datetime-local" class="form-control" id="finishDate" ng-model="actividad.finish_date">
+	      </div>
+	      <div class="form-group">
+	        <label>Duracion (Mns)</label>
+	        <input type="number" class="form-control" id ="time" placeholder="120" ng-model="actividad.duration">
+	      </div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="cancelar()">cerrar</button>
+  <button class="btn btn-primary" ng-click="editar(actividad)">aceptar</button>
+</div>

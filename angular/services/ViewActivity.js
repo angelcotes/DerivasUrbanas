@@ -38,6 +38,14 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
+  data_Credencial.editarActividad = function (dataActvidad) {
+    return $http({
+      method: 'PUT',
+      url: BASE_URL + 'courses/' + dataActvidad.course_id + '/activities/' + dataActvidad.id,
+      data: dataActvidad,
+      headers: StorageService.get('headers')
+    })
+  };
   data_Credencial.EliminarCurso = function (dataCurso){
     return $http.delete(BASE_URL + url + '/' + dataCurso.id, {'headers': StorageService.get('headers'), 'data': dataCurso})
   };
