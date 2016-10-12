@@ -18,26 +18,40 @@ angular.module('vista')
     };  	
     $scope.open = function () {
       var modalInstance = $uibModal.open({
-        templateUrl: 'partial_views/createCourse.html',
-        controller: 'createCourseCtrl as create'
-      });
+        templateUrl: 'partial_views/course/createCourse.html',
+        controller: 'createCourseCtrl as create',
+        resolve: {
+          name: function(){
+            return null;
+          },
+          period: function(){
+            return null;
+          },
+          user_id: function(){
+            return null;
+          },
+          id: function(){
+            return null;
+          }
+        }
+      })
     };
     $scope.editarCurso = function (dataCurso) {
       var modalInstance = $uibModal.open({
-        templateUrl: 'partial_views/editCourse.html',
+        templateUrl: 'partial_views/course/editCourse.html',
         controller: 'createCourseCtrl as create',
         resolve: {
           name: function(){
             return dataCurso.name;
           },
           period: function(){
-            return dataCurso.period
+            return dataCurso.period;
           },
           user_id: function(){
-            return dataCurso.user_id
+            return dataCurso.user_id;
           },
           id: function(){
-            return dataCurso.id
+            return dataCurso.id;
           }
         }
       });

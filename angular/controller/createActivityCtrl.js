@@ -1,8 +1,14 @@
-'use strict';
-
 angular.module('vista')
-  .controller('createCourseCtrl', function ($uibModalInstance, $scope, ViewActiv, $location, $route, name, period, user_id, id) {
-    $scope.course = {name: name, period: period};
+  .controller('createActivityCtrl', function ($uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, $timeout) {
+    /*$uibModalInstance.opened.then(function(){
+        var center = new google.maps.LatLng(-33.870501, 151.206704);
+        var mapOptions = {
+            zoom: 12,
+            center: center,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    });*/
     $scope.crearCursoModal = function(){
   		ViewActiv.crearCurso($scope.course).then(
         function success(response) {

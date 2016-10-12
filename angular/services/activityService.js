@@ -3,7 +3,7 @@
 angular.module('vista')
 .factory('activityService', function ($http, $location, BASE_URL, StorageService) {
   var data_Credencial = {};
-  data_Credencial.mostrarCursos = function (url) {
+  data_Credencial.mostrarActividades = function (url) {
     var credentials = StorageService.get('headers');
     return $http.get(BASE_URL + url,{'headers': credentials})             
   };
@@ -28,8 +28,8 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
-  data_Credencial.EliminarCurso = function (dataActivity){
-    return $http.delete(BASE_URL + url + '/' + dataActivity.id, {'headers': StorageService.get('headers'), 'data': dataActivity})
+  data_Credencial.EliminarActividad = function (dataActivity, url){
+    return $http.delete(BASE_URL + url, {'headers': StorageService.get('headers'), 'data': dataActivity})
   };
   return data_Credencial;
 });

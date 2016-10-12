@@ -7,8 +7,7 @@ angular.module('vista')
 
   data_Credencial.mostrarCursos = function () {
     var credentials = StorageService.get('headers');
-    return $http.get(BASE_URL + url,{'headers': credentials})
-             
+    return $http.get(BASE_URL + url,{'headers': credentials})             
   };
   data_Credencial.crearCurso = function (dataCurso){
     var dataFinal = {
@@ -28,6 +27,14 @@ angular.module('vista')
       method: 'PUT',
       url: BASE_URL + url + '/' + dataCurso.id,
       data: dataCurso,
+      headers: StorageService.get('headers')
+    })
+  };
+  data_Credencial.crearActividad = function (dataActvidad){
+    return $http({
+      method: 'POST',
+      url: BASE_URL + 'courses/' + dataActvidad.course_id + '/activities',
+      data: dataActvidad,
       headers: StorageService.get('headers')
     })
   };

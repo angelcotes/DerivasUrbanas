@@ -7,19 +7,19 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#/home">Menu</a>
+    <a class="navbar-brand" href="#/activity">Menu</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="navbar-collapse navbar-ex6-collapse collapse">
     <ul class="nav navbar-nav">
-      <li><a href="#/courses">Actividades</a></li>
-      <li><a href="#/students">Estudiantes</a></li>
+      <li><a href="#/courses">Actividades<i class="fa fa-folder-open" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
+      <li><a href="#/students">Estudiantes<i class="fa fa-users" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
       <li class="active" ><a href="#/activity">Cursos</a></li>
       <li><a href="">Grupos</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" id="add">
-        <button type="submit" class="btn btn-info btn-circle btn-lg" ng-click="open()"><i class="fa fa-plus" aria-hidden="true" ></i></button>
+        <button type="submit" class="btn btn-info btn-circle btn-lg" ng-click="open()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></button>
         <button type="submit" class="btn btn-danger btn-circle btn-lg" ng-click="LogOut()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
     </ul>
   </div><!-- /.navbar-collapse -->
@@ -31,7 +31,12 @@
         <h4>Nombre Curso: {{curso.name}}</h4>
         <h4>Id curso: {{curso.id}}</h4>
         <h4>Periodo curso:{{curso.period}}</h4>
-        <p><a href="" class="btn btn-primary" role="button" ng-click="ver(curso)">Ver</a> <a href="" class="btn btn-default" role="button" ng-click="editarCurso(curso)">Editar</a> <a class="btn btn-danger" role="button" ng-click="delete(curso)">Eliminar</a></p>
+        <p>
+          <a href="" class="btn btn-primary" role="button" ng-click="ver(curso)"><i class="fa fa-folder-open" aria-hidden="true"></i></a> 
+          <a href="" class="btn btn-success" role="button" ng-click="editarCurso(curso)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
+          <a class="btn btn-danger" role="button" ng-click="delete(curso)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+          <a class="btn btn-primary" role="button" ng-click=""><i class="fa fa-users" aria-hidden="true"></i></a>
+        </p>
       </div>
     </div>
   </div>

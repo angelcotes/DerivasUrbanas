@@ -50,4 +50,8 @@ h2{
 	    max-height: 350px;
 	    background: #dcdcdc;
 	}
+	#mapa_vista{
+		width: 100%;
+		height: 250px;
+	}
 }
