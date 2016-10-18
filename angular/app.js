@@ -21,7 +21,8 @@ angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap'])
         templateUrl: 'partial_views/view_activity.html'
     })
     .when('/students',{
-        templateUrl: 'partial_views/students.html'
+        templateUrl: 'partial_views/students.html',
+        controller: 'studentCtrl as Student'
     })
     .when('/signIn',{
         templateUrl: 'partial_views/signIn.html',

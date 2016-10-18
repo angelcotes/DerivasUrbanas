@@ -14,37 +14,43 @@
   <div class="navbar-collapse navbar-ex6-collapse collapse">
     <ul class="nav navbar-nav">
       <li><a href="#/courses">Actividades<i class="fa fa-folder-open" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
-      <li><a href="#/students">Estudiantes<i class="fa fa-users" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
-      <li class="active" ><a href="#/activity">Cursos</a></li>
+      <li class="active" ><a href="#/students">Estudiantes<i class="fa fa-users" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
+      <li><a href="#/activity">Cursos</a></li>
       <li><a href="">Grupos</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" id="add">
-        <button type="submit" class="btn btn-info btn-circle btn-lg" ng-click="open()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></button>
+      <a class="btn btn-info btn-lg" ng-click="agregar()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></a>
         <button type="submit" class="btn btn-danger btn-circle btn-lg" ng-click="LogOut()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
-<div class="table table-responsive">
+<div class="table table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="estudiantes.length > 0" ng-repeat="estudiante in estudiantes" id="curso" style="width: 100%">
   <table class="table">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Age</th>
-        <th>City</th>
-        <th>Country</th>
+        <th>Curso</th>
+        <th>Identificacion</th>
+        <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>1</td>
-        <td>Anna</td>
-        <td>Pitt</td>
-        <td>35</td>
-        <td>New York</td>
-        <td>USA</td>
+        <td>{{estudiante.course_id}}</td>
+        <td>{{estudiante.user_id}}</td>
+        <td>
+          <p>
+            <a href="#/view_activity" class="btn btn-primary" role="button"><i class="fa fa-eye" aria-hidden="true"></i></a> 
+            <a class="btn btn-success" role="button" ng-click="editar(estudiante)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
+            <a class="btn btn-danger" role="button" ng-click="eliminarData(estudiante)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+          </p>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>
+<div ng-hide="estudiantes.length > 0" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; border: groove;">
+  <div class="page-header">
+    <h1>Curso sin estudiantes</h1>
+  </div>
+  <a class="btn btn-info btn-lg" ng-click="agregar()" style="border-radius:20px;margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true" ></i></a>
 </div>

@@ -15,6 +15,10 @@ angular.module('vista')
     $scope.ver = function(dataCurso){
       StorageService.set('dataCurso', dataCurso);
       $location.path('courses');
+    };
+    $scope.estudiantes = function(dataCurso){
+      StorageService.set('dataCurso', dataCurso);
+      $location.path('students');
     };  	
     $scope.open = function () {
       var modalInstance = $uibModal.open({

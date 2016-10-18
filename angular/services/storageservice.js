@@ -14,7 +14,7 @@ angular.module('vista')
       storageType[key] = value;
     };
 
-    storageService.remove = function (key) {
+    storageService.clean = function (key) {
       var storageType = $rootScope.dataShouldPersist ? $localStorage : $sessionStorage;
       delete storageType[key];
     };

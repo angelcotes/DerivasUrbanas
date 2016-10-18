@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h3>Agregar Estudiante(es)</h3>
+</div>
+<div class="modal-body">
+  <form name="frm">
+	  <div class="form-group">
+	    <label>Correo Estudiante(es)</label>
+	    <div>
+	      <input 
+	        type="email"
+	        class="form-control" 
+	        placeholder="Email" 
+	        ng-model="student.email"  
+	        name="emailStudent" 
+	        required>
+	        <div class="alert alert-warning" role="alert" ng-show="frm.emailStudent.$error.required">Ingrese un correo</div>
+	    </div>
+	  </div>
+	</form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="cancelar(student)">cerrar</button>
+  <button class="btn btn-primary" ng-click="crearEstudiante(student)">aceptar</button>
+</div>

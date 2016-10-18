@@ -29,7 +29,12 @@ angular.module('vista')
     })
   };
   data_Credencial.EliminarActividad = function (dataActivity, url){
-    return $http.delete(BASE_URL + url, {'headers': StorageService.get('headers'), 'data': dataActivity})
+    return $http({
+      method: 'DELETE',
+      url: BASE_URL + url,
+      data: dataActivity,
+      headers: StorageService.get('headers')
+    })
   };
   return data_Credencial;
 });

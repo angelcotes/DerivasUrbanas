@@ -46,6 +46,14 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
+  data_Credencial.crearEstudiante = function(dataEstudiante){
+    return $http({
+      method: 'POST',
+      url: BASE_URL + 'courses/' + dataEstudiante.course_id + '/students',
+      data: dataEstudiante,
+      headers: StorageService.get('headers')
+    })
+  }
   data_Credencial.EliminarCurso = function (dataCurso){
     return $http.delete(BASE_URL + url + '/' + dataCurso.id, {'headers': StorageService.get('headers'), 'data': dataCurso})
   };

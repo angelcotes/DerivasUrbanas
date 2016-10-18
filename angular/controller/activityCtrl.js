@@ -16,6 +16,7 @@ angular.module('vista')
         alert(response);
       }
     );
+    StorageService.clean('dataCurso');
   	$scope.LogOut = function(){
   		AuthService.signOut();
   	};
