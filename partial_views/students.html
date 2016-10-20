@@ -29,14 +29,20 @@
     <thead>
       <tr>
         <th>Curso</th>
-        <th>Identificacion</th>
+         <th>Nombre curso</th>
+        <th>Correo</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
         <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>{{estudiante.course_id}}</td>
-        <td>{{estudiante.user_id}}</td>
+        <td>{{estudiante.course.id}}</td>
+        <td>{{estudiante.course.name}}</td>
+        <td>{{estudiante.email}}</td>
+        <td>{{estudiante.first_name}}</td>
+        <td>{{estudiante.last_name}}</td>
         <td>
           <p>
             <a href="#/view_activity" class="btn btn-primary" role="button"><i class="fa fa-eye" aria-hidden="true"></i></a> 

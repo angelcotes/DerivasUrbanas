@@ -2,7 +2,8 @@
 
 angular.module('vista')
   .controller('vistaCtrl', function ($scope, $uibModal, AuthService, ViewActiv, $location, StorageService) {
-  	ViewActiv.mostrarCursos().then(
+  	StorageService.clean('dataCurso');
+    ViewActiv.mostrarCursos().then(
         function success(response) {
           $scope.cursos = response.data;
         }, function error(response) {

@@ -2,14 +2,25 @@
 
 angular.module('vista')
   .controller('studentCtrl', function ($window, $scope, $uibModal, AuthService, activityService, $location, StorageService) {
-    $scope.course_id = StorageService.get('dataCurso').id;
-    activityService.mostrarActividades('courses/' + StorageService.get('dataCurso').id + '/students').then(
-      function success(response) {
-        $scope.estudiantes = response.data;
-      }, function error(response) {
-        alert(response);
-      }
-    );
+    if (StorageService.get('dataCurso') != null) {
+      activityService.mostrarActividades('users/' + StorageService.get('currentUser').id + '/courses/' + StorageService.get('dataCurso').id + '/students').then(
+        function success(response) {
+          console.log(response);
+          $scope.estudiantes = response.data;
+        }, function error(response) {
+          alert(response);
+        }
+      );
+    } else{
+      activityService.mostrarActividades('users/' + StorageService.get('currentUser').id + '/students').then(
+        function success(response) {
+          console.log(response.data);
+          $scope.estudiantes = response.data;
+        }, function error(response) {
+          alert(response);
+        }
+      );
+    };
   	$scope.LogOut = function(){
   		AuthService.signOut();
   	};
