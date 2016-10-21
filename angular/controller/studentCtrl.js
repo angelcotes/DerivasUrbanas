@@ -43,11 +43,11 @@ angular.module('vista')
     }
     $scope.eliminarData = function(dataStudent){
       console.log(dataStudent);
-      activityService.EliminarActividad(dataStudent, 'courses/' + dataStudent.course_id + '/students/' + dataStudent.id).then(
+      activityService.EliminarActividad(dataStudent, 'courses/' + dataStudent.course.id + '/students/' + dataStudent.id).then(
         function success(response) {
           alert('Estudiantes eliminado');
-          $location.path('students');
           $route.reload();
+          $location.path('students');
         }, function error(response) {
           alert(response);
         }

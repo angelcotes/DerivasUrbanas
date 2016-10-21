@@ -18,6 +18,7 @@ angular.module('vista')
       $location.path('courses');
     };
     $scope.estudiantes = function(dataCurso){
+      console.log(dataCurso);
       StorageService.set('dataCurso', dataCurso);
       $location.path('students');
     };  	
