@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap'])
+angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTagsInput'])
 .constant('BASE_URL', 'http://localhost:3000/')
 .config(['$httpProvider', function($httpProvider) {
-        $httpProvider.defaults.useXDomain = true;
-        $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = "*";
-        $httpProvider.defaults.headers.common['Access-Control-Allow-Methods'] = "POST, GET, OPTIONS, DELETE";
-        $httpProvider.defaults.headers.common['Access-Control-Max-Age'] = "3600";
-        $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = "x-requested-with";
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $httpProvider.defaults.useXDomain = true;
+    $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = "*";
+    $httpProvider.defaults.headers.common['Access-Control-Allow-Methods'] = "POST, GET, OPTIONS, DELETE";
+    $httpProvider.defaults.headers.common['Access-Control-Max-Age'] = "3600";
+    $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = "x-requested-with";
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 ])
 .config(function ($routeProvider) {

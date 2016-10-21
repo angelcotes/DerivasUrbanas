@@ -5,7 +5,7 @@ angular.module('vista')
       $uibModalInstance.close('a');
     };
     $scope.crearEstudiante = function(estudiantes){
-      console.log(estudiantes);
+      console.log(estudiantes.email);
       var data = {
         email: estudiantes.email,
         course_id: StorageService.get('dataCurso').id

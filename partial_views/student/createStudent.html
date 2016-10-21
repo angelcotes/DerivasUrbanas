@@ -6,13 +6,15 @@
 	  <div class="form-group">
 	    <label>Correo Estudiante(es)</label>
 	    <div>
-	      <input 
+	    	<tags-input
 	        type="email"
+	        add-on-comma="true"
+	        add-on-paste="true"
 	        class="form-control" 
 	        placeholder="Email" 
 	        ng-model="student.email"  
 	        name="emailStudent" 
-	        required>
+	        required style="padding: 0px;"></tags-input>
 	        <div class="alert alert-warning" role="alert" ng-show="frm.emailStudent.$error.required">Ingrese un correo</div>
 	    </div>
 	  </div>
