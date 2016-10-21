@@ -5,7 +5,6 @@ angular.module('vista')
     if (StorageService.get('dataCurso') != null) {
       activityService.mostrarActividades('users/' + StorageService.get('currentUser').id + '/courses/' + StorageService.get('dataCurso').id + '/students').then(
         function success(response) {
-          console.log(response);
           $scope.estudiantes = response.data;
         }, function error(response) {
           alert(response);

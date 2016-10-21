@@ -24,7 +24,7 @@
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
-<div class="table table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="estudiantes.length > 0" ng-repeat="estudiante in estudiantes" id="curso" style="width: 100%">
+<div class="table table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="estudiantes.length > 0" id="curso" style="width: 100%">
   <table class="table">
     <thead>
       <tr>
@@ -37,7 +37,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr ng-repeat="estudiante in estudiantes">
         <td>{{estudiante.course.id}}</td>
         <td>{{estudiante.course.name}}</td>
         <td>{{estudiante.email}}</td>
