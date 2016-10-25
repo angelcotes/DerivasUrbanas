@@ -26,11 +26,11 @@
 </nav>
   <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-repeat="curso in cursos" id="curso">
     <div class="thumbnail">
-      <img src="http://previews.123rf.com/images/iofoto/iofoto1002/iofoto100200944/6429701-Bird-s-eye-view-of-rock-formations-in-a-desert-environment-Square-format--Stock-Photo.jpg">
+      <img src="icons/teacher-desk.png">
       <div class="caption">
-        <h4>Nombre Curso: {{curso.name}}</h4>
         <h4>Id curso: {{curso.id}}</h4>
-        <h4>Periodo curso:{{curso.period}}</h4>
+        <h4>Nombre Curso: {{curso.name}}</h4>
+        <h4>Periodo curso: {{curso.period}}</h4>
         <p>
           <a href="" class="btn btn-primary" role="button" ng-click="ver(curso)"><i class="fa fa-folder-open" aria-hidden="true"></i></a> 
           <a href="" class="btn btn-success" role="button" ng-click="editarCurso(curso)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 

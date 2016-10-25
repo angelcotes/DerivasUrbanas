@@ -6,24 +6,30 @@ angular.module('vista')
     };
     $scope.crearEstudiante = function(estudiantes){
       if (StorageService.get('dataCurso') != null) {
+        $scope.data_emails = [];
         estudiantes.email.forEach(function(email_item){
-          var data = {
-            email: email_item.text,
-            course_id: StorageService.get('dataCurso').id
-          }
-          ViewActiv.crearEstudiante(data).then(
-            function success(response) {
-            }, function error(response){
-            }
-          );
+          $scope.data_emails.push({'email': email_item.text, 'course_id': StorageService.get('dataCurso').id});
         });
+        ViewActiv.crearEstudiante({data: $scope.data_emails}, StorageService.get('dataCurso').id).then(
+          function success(response) {
+            $route.reload();
+            alert('Actividad Editada');
+            $route.reload();
+          },
+          function error(response){
+            var error = "";
+            response.config.data.data.forEach(function(emails){
+              error = error + " " + emails.email
+            });
+            alert('Correos no registrados:' + error);
+          }
+        );
       } else{
         $route.reload();
         alert('Estudiantes sin curso asignado');
       };
     };
     $scope.editar = function(estudiantes){
-      console.log(actividad);
       ViewActiv.editarActividad(actividad).then(
         function success(response) {
           $route.reload();

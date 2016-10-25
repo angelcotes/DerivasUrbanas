@@ -46,10 +46,10 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
-  data_Credencial.crearEstudiante = function(dataEstudiante){
+  data_Credencial.crearEstudiante = function(dataEstudiante, course_id){
     return $http({
       method: 'POST',
-      url: BASE_URL + 'courses/' + dataEstudiante.course_id + '/students',
+      url: BASE_URL + 'courses/' + course_id + '/students',
       data: dataEstudiante,
       headers: StorageService.get('headers')
     })
