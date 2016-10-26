@@ -1,16 +1,42 @@
 angular.module('vista')
-  .controller('crear', function ($uibModalInstance, $scope, ViewActiv, $location, $route, StorageService) {
-    $scope.cancelar = function(estudiantes){
+  .controller('crear', function ($uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, AuthService) {
+    $scope.cancelar = function(){
       $uibModalInstance.close('a');
       $route.reload();
     };
-    $scope.crearEstudiante = function(estudiantes){
+    $scope.checkFormat = function(files) {
+      //Take the first selected file
+      $scope.dataEmails = files[0];
+    }
+    $scope.crearEstudiante = function(){
       if (StorageService.get('dataCurso') != null) {
-        $scope.data_emails = [];
-        estudiantes.email.forEach(function(email_item){
+        console.log($scope.dataEmails);
+        $scope.data_emails = {}
+        AuthService.addManyUsers($scope.dataEmails).then(
+          function success(response) {
+            console.log(response);
+            if (response.data.successful_data) {
+              ViewActiv.crearEstudiante({data: response.data.successful_data}, StorageService.get('dataCurso').id).then(
+                function success(response) {
+                  $route.reload();
+                  alert('Estudiantes agregados');
+                }
+              );
+            };
+            if(response.data.error_data){
+              var error = "";
+              response.data.error_data.forEach(function(emails){
+                error = error + " " + emails
+              });
+              alert('Correos con problemas:' + error);
+            };
+            $route.reload();
+          }
+        );
+        /*estudiantes.email.forEach(function(email_item){
           $scope.data_emails.push({'email': email_item.text, 'course_id': StorageService.get('dataCurso').id});
-        });
-        ViewActiv.crearEstudiante({data: $scope.data_emails}, StorageService.get('dataCurso').id).then(
+        });*/
+        /*ViewActiv.crearEstudiante({data: $scope.data_emails}, StorageService.get('dataCurso').id).then(
           function success(response) {
             $route.reload();
             alert('Actividad Editada');
@@ -23,7 +49,7 @@ angular.module('vista')
             });
             alert('Correos no registrados:' + error);
           }
-        );
+        );*/
       } else{
         $route.reload();
         alert('Estudiantes sin curso asignado');

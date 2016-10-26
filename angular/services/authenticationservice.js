@@ -57,20 +57,39 @@ angular.module('vista')
     };
     
   };
-
-  authService.signUp = function (dataUser) {
-    if (credentials !== undefined) {
-      $http.post(BASE_URL + 'auth', {'data': dataUser})
-      .then(
-        function success(response) {
-          StorageService.clear();
-          $location.path('/home');
-        }, function error(argument) {
-          alert(argument.data.errors);
-        }
-      );
-    };
+  authService.addManyUsers = function (dataUsers){
+    return $http({
+      method: 'POST',
+      url: BASE_URL + 'import',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      data: {
+        upload: dataUsers
+      },
+      transformRequest: function (data, headersGetter) {
+        var formData = new FormData();
+        angular.forEach(data, function (value, key) {
+          formData.append(key, value);
+        });
+        return formData;
+      }
+    })
   };
-
+  authService.signUp = function (dataUser) {
+    $http({
+      method: 'POST',
+      url: BASE_URL + 'auth',
+      data: dataUser
+    })
+    .then(
+      function success(response) {
+        StorageService.clear();
+        $location.path('/home');
+      }, function error(argument) {
+        alert(argument.data.errors);
+      }
+    );
+  };
   return authService;
 });

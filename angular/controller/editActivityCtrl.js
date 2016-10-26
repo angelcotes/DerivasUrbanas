@@ -54,13 +54,13 @@ angular.module('vista')
       }
       $timeout(function() {
          initialize()
-       }, 1000);
+       }, 3000);
     });
     $scope.cancelar = function(){
+      $route.reload();
       $uibModalInstance.close('a');
     };
     $scope.editar = function(actividad){
-      console.log(actividad);
       ViewActiv.editarActividad(actividad).then(
         function success(response) {
           $route.reload();

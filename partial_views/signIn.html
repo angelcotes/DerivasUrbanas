@@ -32,16 +32,17 @@
             <div class="input-group" style="width: 100%;">
               <div class="btn-group" data-toggle="buttons" style="width: 100%;">
                 <label class="btn btn-default" style="width: 50%;">
-                    <input type="radio" ng-model="user.users_type">Teacher
+                  <input type="radio" ng-model="user.users_type">Teacher
                 </label>
                 <label class="btn btn-default" style="width: 50%;">
-                    <input type="radio" ng-model="user.users_type">Student
+                  <input type="radio" ng-model="user.users_type">Student
                 </label>
+              </div>
             </div>
           </div>
           <div class="btn_view">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <button type="submit" class="btn btn-primary btn_log" style="width: 100%;" ng-click="sendata()" ng-disable="frm.$invalid">Join</button>
+              <button type="submit" class="btn btn-primary btn_log" style="width: 100%;" ng-click="sendata(user)" ng-disable="frm.$invalid">Join</button>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
               <a class="btn btn-danger btn_log" href="#/home" style="width: 100%;">Cancel</a>
