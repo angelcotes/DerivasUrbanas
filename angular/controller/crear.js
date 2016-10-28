@@ -15,15 +15,16 @@ angular.module('vista')
         AuthService.addManyUsers($scope.dataEmails).then(
           function success(response) {
             console.log(response);
-            if (response.data.successful_data) {
+            if (response.data.successful_data.length > 0) {
               ViewActiv.crearEstudiante({data: response.data.successful_data}, StorageService.get('dataCurso').id).then(
                 function success(response) {
                   $route.reload();
+                  $uibModalInstance.close('a');
                   alert('Estudiantes agregados');
                 }
               );
             };
-            if(response.data.error_data){
+            if(response.data.error_data.length > 0){
               var error = "";
               response.data.error_data.forEach(function(emails){
                 error = error + " " + emails

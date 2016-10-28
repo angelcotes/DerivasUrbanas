@@ -45,7 +45,7 @@ angular.module('vista')
       activityService.EliminarActividad(dataStudent, 'courses/' + dataStudent.course.id + '/students/' + dataStudent.id).then(
         function success(response) {
           $route.reload();
-          alert('Estudiantes eliminado');
+          alert('Estudiante eliminado');
         }, function error(response) {
           alert(response);
         }

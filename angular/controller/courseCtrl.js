@@ -3,13 +3,25 @@
 angular.module('vista')
   .controller('vistaCtrl', function ($scope, $uibModal, AuthService, ViewActiv, $location, StorageService) {
   	StorageService.clean('dataCurso');
-    ViewActiv.mostrarCursos().then(
+    if(StorageService.get('currentUser').users_type == "Teacher"){
+      ViewActiv.mostrarCursos().then(
         function success(response) {
           $scope.cursos = response.data;
         }, function error(response) {
           alert(response);
         }
       );
+    }
+    else{
+      ViewActiv.mostrarEstudianteCursos().then(
+        function success(response) {
+          console.log(response);
+          $scope.cursos = response.data;
+        }, function error(response) {
+          alert(response);
+        }
+      );
+    }
   	$scope.LogOut = function(){
   		AuthService.signOut();
   	};
@@ -18,7 +30,6 @@ angular.module('vista')
       $location.path('courses');
     };
     $scope.estudiantes = function(dataCurso){
-      console.log(dataCurso);
       StorageService.set('dataCurso', dataCurso);
       $location.path('students');
     };  	

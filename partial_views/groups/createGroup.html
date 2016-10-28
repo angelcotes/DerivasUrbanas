@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3>Crear grupo</h3>
+</div>
+<div class="modal-body">
+  <form name="frm">
+	  <div class="form-group">
+	    <label>Nombre del grupo</label>
+	    <div>
+	      <input 
+	        type="text"
+	        class="form-control" 
+	        placeholder="Materia" 
+	        ng-model="grupo.name" 
+	        id="namecourse" 
+	        name="namecourse" 
+	        required>
+	        <div class="alert alert-warning" role="alert" ng-show="frm.namecourse.$error.required">Ingrese un nombre</div>
+	    </div>
+	  </div>
+	</form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="cancelar()">cerrar</button>
+  <button class="btn btn-primary" ng-click="crearCursoModal()">aceptar</button>
+</div>

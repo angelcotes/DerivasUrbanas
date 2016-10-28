@@ -24,17 +24,13 @@ angular.module('vista')
               email: response.data.data.email,
               firstName: response.data.data.first_name,
               lastName: response.data.data.last_name,
-              type: response.data.data.users_type
+              users_type: response.data.data.users_type
             };
             StorageService.clear();
             StorageService.set('headers', headers);
             StorageService.set('currentUser', currentUser);
             $rootScope.dataShouldPersist = authAttempt.remember;
-            if (response.data.data.users_type == 'Teacher') {
-              $location.path("activity");
-            } else{
-              $location.path("Students");
-            };
+            $location.path("activity");
           }, function error(response) {
             alert(response.data.errors);
         }

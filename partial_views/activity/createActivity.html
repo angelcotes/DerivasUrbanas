@@ -5,22 +5,14 @@
 	<div class="thumbnail">
         <div id="map-canvas" style="width: 100%; height: 500px;" ng-click="markerPos()"></div>
 		<div class="caption">
-	      <h2>Datos</h2>
+	      <h2>Datos</h2>	      
+	      <div class="form-group">
+	        <label>Radio (Mts)</label>
+	        <input type="number" class="form-control" placeholder="20" id ="Radius" ng-model="actividad.range">
+	      </div>
 	      <div class="form-group">
 	        <label>Nombre</label>
 	        <input type="text" class="form-control" placeholder="Actividad" id="name" ng-model="actividad.name_activity">
-	      </div>
-	      <div class="form-group">
-	        <label>Latitud</label>
-	        <input type="number" class="form-control" placeholder="11.0130" id ="Latitude" ng-model="actividad.latitude">
-	      </div>
-	      <div class="form-group">
-	        <label>Longitud</label>
-	        <input type="number" class="form-control" placeholder="-74.8276" id ="Longitude" ng-model="actividad.longitude">
-	      </div>
-	      <div class="form-group">
-	        <label>Rango (Mts)</label>
-	        <input type="number" class="form-control" placeholder="20" id ="Radius" ng-model="actividad.range">
 	      </div>
 	      <div class="form-group">
 	        <label>Inicio</label>

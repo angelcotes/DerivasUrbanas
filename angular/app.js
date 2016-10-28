@@ -36,6 +36,10 @@ angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTag
         templateUrl: 'partial_views/courses.html',
         controller: 'activityCtrl as activC'
     })
+    .when('/groups',{
+        templateUrl: 'partial_views/groups.html',
+        controller: 'groupsCtrl as groups'
+    })
     .when('/home',{
         templateUrl: 'partial_views/home.html',
         controller: 'LoginCtrl as login'
@@ -44,18 +48,13 @@ angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTag
 .run(function (StorageService, $rootScope, $location) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         var user = StorageService.get('headers');
-      if (StorageService.get('headers') === undefined) {
-        if (next.templateUrl == 'partial_views/signIn.html') {
-             $location.path("signIn");
+        if (StorageService.get('headers') === undefined) {
+            if (next.templateUrl == 'partial_views/signIn.html') {
+                $location.path("signIn");
+            }
+            else{
+                $location.path("home");
+            }
         }
-        else{
-          $location.path("home");
-        }
-      }else if (user.users_type == "Student"){
-        $location.path( "students" );
-    }
-    else if(user.users_type == "Teacher"){
-        $location.path( "activity" );
-    }
     });
 });

@@ -7,6 +7,13 @@ angular.module('vista')
     var credentials = StorageService.get('headers');
     return $http.get(BASE_URL + url,{'headers': credentials})             
   };
+  data_Credencial.mostrarEstudianteActividades = function(url){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + url,
+      headers: StorageService.get('headers')
+    })
+  };
   data_Credencial.crearCurso = function (dataActivity){
     var dataFinal = {
       name: dataActivity.name,
