@@ -14,11 +14,36 @@ h2{
 .btn_log{
 	margin: 5px;
 }
+.subtitulo{
+	padding: 5px;
+    margin-top: 5px;
+}
 .btn_view{
 	text-align: center;
 }
 .menu_bar{
 	display: none;
+}
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 150px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.titulo{
+	background: #2EFEF7;
+    text-align: center;
+    border-radius: 50px;
+    padding:
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
 }
 #logIn{
 	border-style: outset;

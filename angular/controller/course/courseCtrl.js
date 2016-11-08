@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('vista')
-  .controller('vistaCtrl', function ($scope, $uibModal, AuthService, ViewActiv, $location, StorageService) {
+  .controller('vistaCtrl', function ($scope, $uibModal, $route,AuthService, ViewActiv, $location, StorageService) {
   	StorageService.clean('dataCurso');
+    StorageService.clean('dataActivity');
+    $scope.types = StorageService.get('currentUser').users_type;
     if(StorageService.get('currentUser').users_type == "Teacher"){
       ViewActiv.mostrarCursos().then(
         function success(response) {
@@ -49,6 +51,9 @@ angular.module('vista')
           },
           id: function(){
             return null;
+          },
+          nrc: function(){
+            return null;
           }
         }
       })
@@ -69,6 +74,9 @@ angular.module('vista')
           },
           id: function(){
             return dataCurso.id;
+          },
+          nrc: function(){
+            return dataCurso.nrc;
           }
         }
       });

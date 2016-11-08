@@ -7,6 +7,13 @@ angular.module('vista')
     var credentials = StorageService.get('headers');
     return $http.get(BASE_URL + url,{'headers': credentials})             
   };
+  data_Credencial.mostrar = function(url){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + url,
+      headers: StorageService.get('headers')
+    })
+  };
   data_Credencial.mostrarEstudianteActividades = function(url){
     return $http({
       method: 'GET',
@@ -14,12 +21,20 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
+  data_Credencial.crear = function(url, data){
+    return $http({
+      method: 'POST',
+      url: BASE_URL + url,
+      data: data,
+      headers: StorageService.get('headers') 
+    })
+  };
   data_Credencial.crearCurso = function (dataActivity){
-    var dataFinal = {
+    /*var dataFinal = {
       name: dataActivity.name,
       period: dataActivity.period,
       user_id: StorageService.get('currentUser').id
-    };
+    };*/
     return $http({
       method: 'POST',
       url: BASE_URL + url,
@@ -35,13 +50,26 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
-  data_Credencial.EliminarActividad = function (dataActivity, url){
+  data_Credencial.EliminarActividad = function (url){
     return $http({
       method: 'DELETE',
       url: BASE_URL + url,
-      data: dataActivity,
       headers: StorageService.get('headers')
     })
   };
+  data_Credencial.mostrarGrupos = function (){
+    return  $http({
+      method: 'GET',
+      url: BASE_URL + 'courses/' + StorageService.get('dataActivity').course_nrc + '/activities/' + StorageService.get('dataActivity').id + '/groups',
+      headers: StorageService.get('headers')
+    })
+  }
+  data_Credencial.mostrarGruposTodos = function(){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + 'users/' + StorageService.get('currentUser').id + '/AllGroups',
+      headers: StorageService.get('headers')
+    })
+  }
   return data_Credencial;
 });

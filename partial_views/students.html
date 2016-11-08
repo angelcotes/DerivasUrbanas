@@ -13,14 +13,14 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="navbar-collapse navbar-ex6-collapse collapse">
     <ul class="nav navbar-nav">
+      <li><a href="#/activity">Cursos</a></li>
       <li><a href="#/courses">Actividades<i class="fa fa-book" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
       <li class="active" ><a href="#/students">Estudiantes<i class="fa fa-user" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
-      <li><a href="#/activity">Cursos</a></li>
       <li><a href="#/groups">Grupos<i class="fa fa-users" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" id="add">
       <a class="btn btn-info btn-lg" ng-click="agregar()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></a>
-        <button type="submit" class="btn btn-danger btn-circle btn-lg" ng-click="LogOut()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+      <button type="submit" class="btn btn-danger btn-circle btn-lg" ng-click="LogOut()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
@@ -45,7 +45,6 @@
         <td>{{estudiante.last_name}}</td>
         <td>
           <p>
-            <a href="#/view_activity" class="btn btn-primary" role="button"><i class="fa fa-eye" aria-hidden="true"></i></a> 
             <a class="btn btn-success" role="button" ng-click="editar(estudiante)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
             <a class="btn btn-danger" role="button" ng-click="eliminarData(estudiante)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
           </p>

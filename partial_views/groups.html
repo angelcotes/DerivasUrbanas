@@ -13,29 +13,30 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="navbar-collapse navbar-ex6-collapse collapse">
     <ul class="nav navbar-nav">
+      <li><a href="#/activity">Cursos</a></li>
       <li><a href="#/courses">Actividades<i class="fa fa-book" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
       <li><a href="#/students">Estudiantes<i class="fa fa-user" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
-      <li><a href="#/activity">Cursos</a></li>
       <li class="active" ><a href="">Grupos<i class="fa fa-users" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" id="add">
-        <button type="submit" class="btn btn-info btn-circle btn-lg" ng-click="crear()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></button>
+        <button type="submit" class="btn btn-info btn-circle btn-lg" ng-hide='{{types == "Student"}}' ng-click="crear()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></button>
         <button type="submit" class="btn btn-danger btn-circle btn-lg" ng-click="LogOut()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
-  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-repeat="grupo in grupos" id="grupo" ng-show="grupos.length > 0">
+  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-repeat="grupo in grupos" id="curso" ng-show="grupos.length > 0">
     <div class="thumbnail">
-      <img src="icons/teacher-desk.png">
+      <img src="icons/meeting.png">
       <div class="caption" style="text-align: center;">
         <h4>Id grupo: {{grupo.id}}</h4>
-        <h4>Nombre grupo: {{grupo.name}}</h4>
-        <h4>Periodo grupo: {{grupo.period}}</h4>
+        <h4>Id Actividad: {{activity_id}}</h4>
+        <h4>Id Curso: {{course_nrc}}</h4>
+        <h4>Nombre grupo: {{grupo.name_group}}</h4>
         <p>
-          <a href="" class="btn btn-primary" role="button" ng-click="ver(grupo)"><i class="fa fa-folder-open" aria-hidden="true"></i></a> 
-          <a href="" class="btn btn-success" role="button" ng-click="editarCurso(curso)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
-          <a class="btn btn-danger" role="button" ng-click="delete(curso)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-          <a class="btn btn-primary" role="button" ng-click="estudiantes(curso)"><i class="fa fa-users" aria-hidden="true"></i></a>
+          <a href="" class="btn btn-primary" role="button" ng-click="ver()"><i class="fa fa-book" aria-hidden="true"></i></a> 
+          <a href="" class="btn btn-success" role="button" ng-hide='{{types == "Student"}}' ng-click="editarGrupo(grupo)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
+          <a class="btn btn-danger" role="button" ng-hide='{{types == "Student"}}' ng-click="eliminarData(grupo)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+          <a class="btn btn-primary" role="button" ng-click="estudiantes(grupo)"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
         </p>
       </div>
     </div>
@@ -45,5 +46,5 @@
   <div class="page-header">
     <h1>no existen grupos creados</h1>
   </div>
-  <a class="btn btn-info btn-lg" ng-click="crear()" style="border-radius:20px;margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true" ></i></a>
+  <a class="btn btn-info btn-lg" ng-click="crear()" ng-hide='{{types == "Student"}}' style="border-radius:20px;margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true" ></i></a>
 </div>

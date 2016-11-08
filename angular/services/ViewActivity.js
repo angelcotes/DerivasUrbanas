@@ -37,10 +37,10 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
-  data_Credencial.crearActividad = function (dataActvidad){
+  data_Credencial.crearActividad = function (dataActvidad, course_id){
     return $http({
       method: 'POST',
-      url: BASE_URL + 'courses/' + dataActvidad.course_id + '/activities',
+      url: BASE_URL + 'courses/' + course_id + '/activities',
       data: dataActvidad,
       headers: StorageService.get('headers')
     })
@@ -63,6 +63,14 @@ angular.module('vista')
   }
   data_Credencial.EliminarCurso = function (dataCurso){
     return $http.delete(BASE_URL + url + '/' + dataCurso.id, {'headers': StorageService.get('headers'), 'data': dataCurso})
+  };
+  data_Credencial.crearGrupo = function(dataGrupo){
+    return $http({
+      method: 'POST',
+      url: BASE_URL +  'courses/' + StorageService.get('dataCurso').nrc + '/activities/' + StorageService.get('dataActivity').id + '/groups',
+      data: dataGrupo,
+      headers: StorageService.get('headers')  
+    })
   };
   return data_Credencial;
 });

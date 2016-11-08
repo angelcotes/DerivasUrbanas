@@ -13,13 +13,13 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="navbar-collapse navbar-ex6-collapse collapse">
     <ul class="nav navbar-nav">
+      <li class="active" ><a href="#/activity">Cursos</a></li>
       <li><a href="#/courses">Actividades<i class="fa fa-book" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
       <li><a href="#/students">Estudiantes<i class="fa fa-user" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
-      <li class="active" ><a href="#/activity">Cursos</a></li>
       <li><a href="#/groups">Grupos<i class="fa fa-users" aria-hidden="true" style="margin-left: 5px;"></i></a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" id="add">
-        <button type="submit" class="btn btn-info btn-circle btn-lg" ng-click="open()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></button>
+        <button type="submit" class="btn btn-info btn-circle btn-lg" ng-hide='{{types == "Student"}}' ng-click="open()" style="border-radius:20px;"><i class="fa fa-plus" aria-hidden="true" ></i></button>
         <button type="submit" class="btn btn-danger btn-circle btn-lg" ng-click="LogOut()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
     </ul>
   </div><!-- /.navbar-collapse -->
@@ -28,7 +28,7 @@
     <div class="thumbnail">
       <img src="icons/teacher-desk.png">
       <div class="caption" style="text-align: center;">
-        <h4>Id curso: {{curso.id}}</h4>
+        <h4>NRC: {{curso.nrc}}</h4>
         <h4>Nombre Curso: {{curso.name}}</h4>
         <h4>Periodo curso: {{curso.period}}</h4>
         <p>
@@ -45,5 +45,5 @@
   <div class="page-header">
     <h1>No se han creado cursos</h1>
   </div>
-  <a class="btn btn-info btn-lg" ng-click="open()" style="border-radius:20px;margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true" ></i></a>
+  <a class="btn btn-info btn-lg" ng-hide='{{types == "Student"}}' ng-click="open()" style="border-radius:20px;margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true" ></i></a>
 </div>

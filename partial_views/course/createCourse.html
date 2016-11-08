@@ -18,6 +18,20 @@
 	    </div>
 	  </div>
 	  <div class="form-group">
+	    <label>NRC del Curso</label>
+	    <div>
+	      <input 
+	        type="text"
+	        class="form-control" 
+	        placeholder="Materia" 
+	        ng-model="course.nrc" 
+	        id="nrc" 
+	        name="nrc" 
+	        required>
+	        <div class="alert alert-warning" role="alert" ng-show="frm.nrc.$error.required">Ingrese un NRC</div>
+	    </div>
+	  </div>
+	  <div class="form-group">
 	    <label>Periodo</label>
 	    <div>
 	      <input 

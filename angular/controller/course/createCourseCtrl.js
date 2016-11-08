@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('vista')
-  .controller('createCourseCtrl', function ($uibModalInstance, $scope, ViewActiv, $location, $route, name, period, user_id, id) {
-    $scope.course = {name: name, period: period};
+  .controller('createCourseCtrl', function ($uibModalInstance, $scope, ViewActiv, $location, $route, id, name, period, user_id, nrc) {
+    $scope.course = {name: name, period: period, nrc: nrc};
     $scope.crearCursoModal = function(){
   		ViewActiv.crearCurso($scope.course).then(
         function success(response) {
@@ -11,7 +11,7 @@ angular.module('vista')
           $location.path("activity");
         }, function error(response){
           $route.reload();
-          alert('Usuario no autorizado');
+          alert(response.data);
         }
       );
       $uibModalInstance.close('a');
@@ -24,6 +24,7 @@ angular.module('vista')
       var data = {
         name: $scope.course.name,
         period: $scope.course.period,
+        nrc: $scope.course.nrc,
         id: id,
         user_id: user_id
       };
@@ -34,7 +35,7 @@ angular.module('vista')
           $route.reload();
         }, function error(response){
           $route.reload();
-          alert('Usuario no autorizado');
+          alert(response.data);
         }
       );
       $uibModalInstance.close('a');

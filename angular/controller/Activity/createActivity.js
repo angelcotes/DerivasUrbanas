@@ -67,16 +67,17 @@ angular.module('vista')
        }, 1000);
     });
     $scope.crearActivity = function(actividad){
-        $scope.actividad.course_id = StorageService.get('dataCurso').id;
-        ViewActiv.crearActividad($scope.actividad).then(
+      ids = $scope.actividad.nrcs.split(",");
+      /*necesito el ID del curso*/
+      ViewActiv.crearActividad($scope.actividad, ids[0]).then(
         function success(response) {
-          alert('Actividad creada');
           $route.reload();
-          $location.path("activity");
+          alert('Actividad creada');
+          $location.path("courses");
           $uibModalInstance.close('a');
         }, function error(response){
-          $location.path("activity");
           $route.reload();
+          $location.path("courses");
           alert('Usuario no autorizado');
           $uibModalInstance.close('a');
         }

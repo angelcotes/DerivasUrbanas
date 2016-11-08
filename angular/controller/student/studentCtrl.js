@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('studentCtrl', function ($window, $scope, $uibModal, AuthService, activityService, $location, StorageService) {
+  .controller('studentCtrl', function ($window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
     if (StorageService.get('dataCurso') != null) {
       activityService.mostrarActividades('users/' + StorageService.get('currentUser').id + '/courses/' + StorageService.get('dataCurso').id + '/students').then(
         function success(response) {
@@ -42,7 +42,7 @@ angular.module('vista')
     }
     $scope.eliminarData = function(dataStudent){
       console.log(dataStudent);
-      activityService.EliminarActividad(dataStudent, 'courses/' + dataStudent.course.id + '/students/' + dataStudent.id).then(
+      activityService.EliminarActividad('courses/' + dataStudent.course.id + '/students/' + dataStudent.id).then(
         function success(response) {
           $route.reload();
           alert('Estudiante eliminado');

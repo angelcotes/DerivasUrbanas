@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <h3>Manager Estudiantes</h3>
+</div>
+<div class="modal-body">
+    <form name="frm">
+        <div class="form-group">
+            <div class="titulo">
+                <label class="subtitulo">Estudiantes sin grupo</label>
+            </div>
+            <div>
+                <table class="table grupos table-fixed">
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th class="col-xs-4">Apellidos</th><th class="col-xs-2">Nombre</th><th class="col-xs-5">Email</th><th class="col-xs-1">Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody class="datos">
+                    <tr  ng-repeat="estudiante in estudiantes">
+                      <td class="col-xs-4">{{estudiante.last_name}}</td>
+                      <td class="col-xs-2">{{estudiante.first_name}}</td>
+                      <td class="col-xs-5">{{estudiante.email}}</td>
+                      <td class="col-xs-1"><a href="" class="btn btn-primary" role="button" ng-click="agregar($index, estudiante)"><i class="fa fa-user-plus" aria-hidden="true"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="titulo">
+                <label class="subtitulo">Integrantes del grupo {{grupo.id}}</label>
+            </div>
+            <div>
+                <table class="table grupos table-fixed">
+                  <thead class="thead-inverse">
+                    <tr>
+                      <tr>
+                      <th class="col-xs-4">Apellidos</th><th class="col-xs-2">Nombre</th><th class="col-xs-5">Rol</th><th class="col-xs-1">Opciones</th>
+                    </tr>
+                    </tr>
+                  </thead>
+                  <tbody class="datos">
+                    <tr  ng-repeat="miembro in miembros">
+                      <td class="col-xs-4">{{miembro.last_name}}</td>
+                      <td class="col-xs-2">{{miembro.first_name}}</td>
+                      <td class="col-xs-5">
+                        <select name="singleSelect" ng-model="miembro.rol" ng-value="{{miembro.rol}}">
+                          <option value="Box_Keeper">Box Keeper</option>
+                          <option value="Camera_Man">Camera Man</option>
+                          <option value="Diary_Keeper">Diary Keeper</option>
+                          <option value="Driver">Driver</option>
+                          <option value="Environmental_Ranger">Environmental Ranger</option>
+                          <option value="Head_Hunter">Head Hunter</option>
+                          <option value="Sensitive_Explorer">Sensitive Explorer</option>               
+                          <option value="Urban_Scout">Urban Scout</option>
+                        </select>
+                      </td>
+                      <td class="col-xs-1"><a href=""  class="btn btn-danger" role="button" ng-click="remover($index, miembro)"><i class="fa fa-eraser" aria-hidden="true"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="cerrar()">cerrar</button>
+  <button class="btn btn-primary" ng-click="guardar()">aceptar</button>
+</div>

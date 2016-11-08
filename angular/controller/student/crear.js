@@ -1,5 +1,5 @@
 angular.module('vista')
-  .controller('crear', function ($uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, AuthService) {
+  .controller('crear', function ($uibModalInstance, $route, $scope, ViewActiv, $location, $route, StorageService, AuthService) {
     $scope.cancelar = function(){
       $uibModalInstance.close('a');
       $route.reload();
@@ -31,6 +31,7 @@ angular.module('vista')
               });
               alert('Correos con problemas:' + error);
             };
+            $uibModalInstance.close('a');
             $route.reload();
           }
         );
