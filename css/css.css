@@ -14,6 +14,12 @@ h2{
 .btn_log{
 	margin: 5px;
 }
+.start{
+	width: 100%;
+}
+.opciones{
+	text-align: center;
+}
 .subtitulo{
 	padding: 5px;
     margin-top: 5px;

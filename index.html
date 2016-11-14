@@ -44,8 +44,21 @@
   <script type="text/javascript" src="angular/controller/group/groupsCtrl.js"></script>
   <script type="text/javascript" src="angular/controller/group/createGroupCtrl.js"></script>
   <script type="text/javascript" src="angular/controller/group/addMembersCtrl.js"></script>
+  <script type="text/javascript" src="angular/controller/group/reportCtrl.js"></script>
   <script type="text/javascript" src="javaScript/exif.js"></script>
   <script src="javaScript/stellar.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDD0tKjQ542_jm_3kqXnX5LdMMJilQUafA",
+      authDomain: "derivas-36469.firebaseapp.com",
+      databaseURL: "https://derivas-36469.firebaseio.com",
+      storageBucket: "",
+      messagingSenderId: "261940638749"
+    };
+    firebase.initializeApp(config);
+  </script>
 </head>
 <body ng-app="vista">
   <div class="container-fluid">

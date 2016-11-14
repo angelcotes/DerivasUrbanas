@@ -21,6 +21,34 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
+  data_Credencial.mostrarGruposEstudiante = function(){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + "users/" + StorageService.get('currentUser').id + "/allGroupStudent",
+      headers: StorageService.get('headers')
+    })
+  };
+  data_Credencial.mostrarGrupoEstudiante = function(actividad){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + "users/" + StorageService.get('currentUser').id + "/groupStudent/" + actividad.id,
+      headers: StorageService.get('headers')
+    })
+  };
+  data_Credencial.iniciarActividad = function(data, estado){
+    var data_final = {
+      activity_id: data.id,
+      id: StorageService.get('currentUser').id,
+      time: new Date(Date.now()),
+      estado: estado
+    }
+    return  $http({
+      method: 'PUT',
+      url: BASE_URL + "users/" + StorageService.get('currentUser').id + '/startActivity',
+      data: data_final,
+      headers: StorageService.get('headers')
+    })
+  };
   data_Credencial.crear = function(url, data){
     return $http({
       method: 'POST',

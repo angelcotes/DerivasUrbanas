@@ -1,19 +1,28 @@
 'use strict';
 
 angular.module('vista')
-  .controller('activityCtrl', function ($window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
+  .controller('activityCtrl', function ($interval, $window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
     $scope.types = StorageService.get('currentUser').users_type;
+    $scope.times = 30000;
+    var firebaseRef = firebase.database().ref();
     StorageService.clean('dataActivity');
+    var mapOptions = {
+      center: {lat: -34.397, lng: 150.644},
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      zoom: 8
+    };
     if (StorageService.get('currentUser').users_type == "Teacher") { 
       if (StorageService.get('dataCurso') != null) {
         activityService.mostrarActividades('courses/' + StorageService.get('dataCurso').nrc + '/activities').then(
           function success(response) {
             $scope.actividades = response.data;
             $scope.initialize = function() {
-              var map = new google.maps.Map(document.getElementById('map'), {
-                 center: {lat: -34.397, lng: 150.644},
-                 zoom: 8
-              });
+              var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+              map.setOptions({streetViewControl: false});
             }           
             google.maps.event.addDomListener(window, 'load', $scope.initialize);
           }, function error(response) {
@@ -25,10 +34,7 @@ angular.module('vista')
           function success(response) {
             $scope.actividades = response.data;
             $scope.initialize = function() {
-              var map = new google.maps.Map(document.getElementById('map'), {
-                 center: {lat: -34.397, lng: 150.644},
-                 zoom: 8
-              });
+              var map = new google.maps.Map(document.getElementById('map'), mapOptions);
             }           
             google.maps.event.addDomListener(window, 'load', $scope.initialize);
           }, function error(response) {
@@ -38,14 +44,11 @@ angular.module('vista')
       };
     }else{
       if (StorageService.get('dataCurso') != null) {
-        activityService.mostrarActividades('users/' + StorageService.get('dataCurso').course_id + '/activitiesStudent').then(
+        activityService.mostrarActividades('users/' + StorageService.get('dataCurso').id + '/activitiesStudent').then(
           function success(response) {
             $scope.actividades = response.data;
             $scope.initialize = function() {
-              var map = new google.maps.Map(document.getElementById('map'), {
-                 center: {lat: -34.397, lng: 150.644},
-                 zoom: 8
-              });
+              var map = new google.maps.Map(document.getElementById('map'), mapOptions);
             }           
             google.maps.event.addDomListener(window, 'load', $scope.initialize);
           }
@@ -55,10 +58,7 @@ angular.module('vista')
           function success(response) {
             $scope.actividades = response.data;
             $scope.initialize = function() {
-              var map = new google.maps.Map(document.getElementById('map'), {
-                 center: {lat: -34.397, lng: 150.644},
-                 zoom: 8
-              });
+              var map = new google.maps.Map(document.getElementById('map'), mapOptions);
             }           
             google.maps.event.addDomListener(window, 'load', $scope.initialize);
           }, function error(response) {
@@ -107,5 +107,82 @@ angular.module('vista')
     $scope.verGrupos = function(actividad){
       StorageService.set('dataActivity', actividad);
       $location.path('groups');
+    };
+    $scope.ejecutar = function(actividad){
+      var date1 = new Date(Date.now());
+      if (date1 <= new Date(actividad.finish_date)) {
+        navigator.geolocation.getCurrentPosition(function(respuesta) {
+
+          var pointA = new google.maps.LatLng(respuesta.coords.latitude, respuesta.coords.longitude);
+          var pointB = new google.maps.LatLng(parseFloat(actividad.latitude), parseFloat(actividad.longitude));
+          var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
+          if (distanceBetweenPoints >= parseFloat(actividad.range)) {
+            $interval.cancel(interval, "pausado");
+            activityService.iniciarActividad(actividad, "ejecutado").then(
+              function succes(response){
+                $interval.cancel(interval);
+                console.log(response.sms);
+              },function error(response){
+                console.log(response.sms);
+              }
+            );
+          } else{
+            firebaseRef.child("User_id_" + StorageService.get('currentUser').id).child("Act_id_" + actividad.id).push().set({Latitud: respuesta.coords.latitude, Longitud: respuesta.coords.longitude});
+            activityService.iniciarActividad(actividad, "ejecutado").then(
+              function succes(response){
+                console.log(response.sms);
+              },function error(response){
+                console.log(response.sms);
+              }
+            );
+          };
+        }, function(error) {
+          $interval.cancel(interval);
+          console.log('Para poder ver la actividad debe habilitar la geolocalizacion. Ingrese nuevamente a la pagina.');
+        });
+      } else {
+        $interval.cancel(interval);
+        console.log('Esta actividad a finalizado');
+      };
+    };
+    $scope.startActiviry = function(actividad){
+      $scope.ejecutar(actividad);
+      var interval = $interval(function () {
+        var date1 = new Date(Date.now());
+        if (date1 <= new Date(actividad.finish_date)) {
+          navigator.geolocation.getCurrentPosition(function(respuesta) {
+
+            var pointA = new google.maps.LatLng(respuesta.coords.latitude, respuesta.coords.longitude);
+            var pointB = new google.maps.LatLng(parseFloat(actividad.latitude), parseFloat(actividad.longitude));
+            var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
+            if (distanceBetweenPoints >= parseFloat(actividad.range)) {
+              $interval.cancel(interval, "pausado");
+              activityService.iniciarActividad(actividad, "ejecutado").then(
+                function succes(response){
+                  $interval.cancel(interval);
+                  console.log(response.sms);
+                },function error(response){
+                  console.log(response.sms);
+                }
+              );
+            } else{
+              firebaseRef.child("User_id_" + StorageService.get('currentUser').id).child("Act_id_" + actividad.id).push().set({Latitud: respuesta.coords.latitude, Longitud: respuesta.coords.longitude});
+              activityService.iniciarActividad(actividad, "ejecutado").then(
+                function succes(response){
+                  console.log(response.sms);
+                },function error(response){
+                  console.log(response.sms);
+                }
+              );
+            };
+          }, function(error) {
+            $interval.cancel(interval);
+            console.log('Para poder ver la actividad debe habilitar la geolocalizacion. Ingrese nuevamente a la pagina.');
+          });
+        } else {
+          $interval.cancel(interval);
+          console.log('Esta actividad a finalizado');
+        };
+      }, $scope.times);
     };
 });

@@ -13,7 +13,6 @@ angular.module('vista')
     } else{
       activityService.mostrarActividades('users/' + StorageService.get('currentUser').id + '/students').then(
         function success(response) {
-          console.log(response.data);
           $scope.estudiantes = response.data;
         }, function error(response) {
           alert(response);
@@ -31,13 +30,7 @@ angular.module('vista')
     }
     $scope.editar = function(actividad){
       var modalInstance = $uibModal.open({
-        templateUrl: 'partial_views/activity/editActivity.html',
-        controller: 'editActivityCtrl as actCtrl',
-        resolve: {
-          data: function(){
-            return actividad
-          }
-        }
+        templateUrl: 'partial_views/student/editStudent.html'
       })
     }
     $scope.eliminarData = function(dataStudent){

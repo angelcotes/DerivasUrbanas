@@ -48,7 +48,7 @@ angular.module('vista')
   data_Credencial.editarActividad = function (dataActvidad) {
     return $http({
       method: 'PUT',
-      url: BASE_URL + 'courses/' + dataActvidad.course_id + '/activities/' + dataActvidad.id,
+      url: BASE_URL + 'courses/' + dataActvidad.course_nrc + '/activities/' + dataActvidad.id,
       data: dataActvidad,
       headers: StorageService.get('headers')
     })

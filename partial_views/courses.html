@@ -44,14 +44,17 @@
       <h5>Id Actividad: {{actividad.id}}</h5>
 	    <h5>Nombre: {{actividad.name_activity}}</h5>
       <h5>Radio actividad:{{actividad.range}}</h5>
-      <h5 type="datetime-local">Inicio: {{actividad.start_date}}</h5>
-      <h5 type="datetime-local">Cierre:{{actividad.finish_date}}</h5>
+      <h5 type="datetime-local">Inicio: {{actividad.start_date | date:'medium'}}</h5>
+      <h5 type="datetime-local">Cierre:{{actividad.finish_date | date:'medium'}}</h5>
       <h5>Duracion:{{actividad.duration}}</h5>
-	    <p>
-        <a class="btn btn-primary" role="button"><i class="fa fa-eye" aria-hidden="true"></i></a> 
+	    <p class="opciones">
+        <a class="btn btn-info" role="button"><i class="fa fa-folder" aria-hidden="true"></i></a> 
         <a class="btn btn-success" ng-hide='{{actividad.users_type == "Student"}}' role="button" ng-click="editar(actividad)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
         <a class="btn btn-danger" ng-hide='{{actividad.users_type == "Student"}}' role="button" ng-click="eliminarData(actividad)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-        <a class="btn btn-primary" role="button" ng-click="verGrupos(actividad)"><i class="fa fa-users" aria-hidden="true"></i></a>
+        <a class="btn btn-info" role="button" ng-click="verGrupos(actividad)"><i class="fa fa-users" aria-hidden="true"></i></a>
+      </p>
+      <p>
+        <a class="btn btn-primary start" ng-show='{{actividad.users_type == "Student"}}' role="button"  ng-click="startActiviry(actividad)"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
       </p>
 	  </div>
 	</div>

@@ -1,9 +1,12 @@
 angular.module('vista')
-  .controller('createActivity', function ($timeout, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService) {
+  .controller('reportCtrl', function ($timeout, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService) {
+    var marker = new google.maps.Marker();
+    var cityCircle = new google.maps.Circle;
     $uibModalInstance.opened.then(function() {
       function initialize() {
         navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
         var divMapa = document.getElementById('map-canvas');
+        var data_time = new Date();
         function fn_error(){
           divMapa.innerHTML = 'Para poder ver la actividad debe habilitar la geolocalizacion. Ingrese nuevamente a la pagina.';
         }
@@ -12,17 +15,6 @@ angular.module('vista')
           var cityCircle = new google.maps.Circle;
           var latitud = respuesta.coords.latitude;
           var longitud = respuesta.coords.longitude;
-          /*var latArea = 11.0130076;
-          var LonArea = -74.8276837;*/
-
-          var pointA = new google.maps.LatLng(latitud, longitud);
-          var pointB = new google.maps.LatLng(latitud, longitud);
-
-          var distanceBetweenPoints = google.maps.geometry
-                                      .spherical.computeDistanceBetween(pointA, pointB);
-          if (distanceBetweenPoints >= 500) {
-            $("#map-canvas").text('Fuera de rango: '+latArea);
-          };
           var citymap = {
             area_work: {
               center: {lat: latitud, lng: longitud}
@@ -63,26 +55,23 @@ angular.module('vista')
       }
       $timeout(function() {
         initialize()
-       }, 1000);
+       }, 1000);;
     });
-    $scope.crearActivity = function(actividad){
-      ids = $scope.actividad.nrcs.split(",");
-      /*necesito el ID del curso*/
-      ViewActiv.crearActividad($scope.actividad, ids[0]).then(
+    $scope.cancelar = function(){
+      $route.reload();
+      $uibModalInstance.close('a');
+    };
+    $scope.editar = function(actividad){
+      ViewActiv.editarActividad(actividad).then(
         function success(response) {
           $route.reload();
-          alert('Actividad creada');
-          $location.path("courses");
-          $uibModalInstance.close('a');
+          alert('Actividad Editada');
+          $route.reload();
         }, function error(response){
           $route.reload();
-          $location.path("courses");
           alert('Usuario no autorizado');
-          $uibModalInstance.close('a');
         }
       );
-    };
-    $scope.cancelar = function(){
       $uibModalInstance.close('a');
     };
 });
