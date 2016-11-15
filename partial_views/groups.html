@@ -29,10 +29,10 @@
       <img src="icons/meeting.png">
       <div class="caption" style="text-align: center;">
         <h4>Id grupo: {{grupo.id}}</h4>
-        <h4>Id Actividad: {{activity_id}}</h4>
+        <h4>Id Actividad: {{grupo.activity_id}}</h4>
         <h4>Nombre grupo: {{grupo.name_group}}</h4>
         <p>
-          <a href="" class="btn btn-primary" role="button" ng-click="ver()"><i class="fa fa-folder" aria-hidden="true"></i></a>
+          <a href="" class="btn btn-primary" role="button" ng-click="ver(grupo.activity_id)"><i class="fa fa-folder" aria-hidden="true"></i></a>
           <a href="" class="btn btn-success" role="button" ng-hide='{{types == "Student"}}' ng-click="editarGrupo(grupo)"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
           <a class="btn btn-danger" role="button" ng-hide='{{types == "Student"}}' ng-click="eliminarData(grupo)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
           <a class="btn btn-primary" role="button" ng-click="estudiantes(grupo)"><i class="fa fa-user-plus" aria-hidden="true"></i></a>

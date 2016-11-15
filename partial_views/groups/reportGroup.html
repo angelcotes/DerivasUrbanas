@@ -5,7 +5,23 @@
 	<div class="thumbnail">
         <div id="map-canvas" style="width: 100%; height: 500px;" ng-click="markerPos()"></div>
 		<div class="caption">
-	      
+			<div>
+                <table class="table grupos table-fixed">
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th class="col-xs-4">Apellidos</th><th class="col-xs-2">Nombre</th><th class="col-xs-5">Rol</th><th class="col-xs-1">Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody class="datos">
+                    <tr  ng-repeat="estudiante in data_miembros">
+                      <td class="col-xs-4">{{estudiante.last_name}}</td>
+                      <td class="col-xs-2">{{estudiante.first_name}}</td>
+                      <td class="col-xs-5">{{estudiante.rol}}</td>
+                      <td class="col-xs-1"><a href="" class="btn btn-primary" role="button" ng-click="ruta(estudiante)"><i class="fa fa-map-marker" aria-hidden="true"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
 		</div>
 	</div>
 </div>

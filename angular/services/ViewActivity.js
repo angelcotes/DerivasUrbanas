@@ -16,6 +16,13 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
+  data_Credencial.miembros = function(grupo){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + "users/" + grupo + "/members",
+      headers: StorageService.get('headers')
+    });
+  };
   data_Credencial.crearCurso = function (dataCurso){
     var dataFinal = {
       name: dataCurso.name,

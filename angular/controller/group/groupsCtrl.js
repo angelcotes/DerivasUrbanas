@@ -3,7 +3,6 @@
 angular.module('vista')
   .controller('groupsCtrl', function ($window,$scope, $uibModal, AuthService, $route, activityService, $location, StorageService) {
     $scope.types = StorageService.get('currentUser').users_type;
-    $scope.grupos = [];
     if ($scope.types == 'Teacher') {
       if (StorageService.get('dataCurso') != undefined && StorageService.get('dataActivity') != undefined) {
         activityService.mostrarGrupos().then(
@@ -12,7 +11,7 @@ angular.module('vista')
               $scope.types = response.data[0].users_type;
               $scope.course_nrc = StorageService.get('dataCurso').nrc;
               $scope.activity_id = StorageService.get('dataActivity').id;
-              $scope.grupos.push(response.data);
+              $scope.grupos = response.data;
             };
           }, function error(response){
             alert(response.data);
@@ -25,7 +24,7 @@ angular.module('vista')
               $scope.types = response.data[0].users_type;
               $scope.course_nrc = response.data[0].course_nrc;
               $scope.activity_id = response.data[0].activity_id;
-              $scope.grupos.push(response.data);
+              $scope.grupos = response.data;
             };
           }, function error(response){
             alert(response.data);
@@ -36,9 +35,7 @@ angular.module('vista')
       if (StorageService.get('dataActivity') != undefined) {
         activityService.mostrarGrupoEstudiante(StorageService.get('dataActivity')).then(
           function success(response) {
-            $scope.types = response.data.users_type;
-            $scope.activity_id = response.data.sms.activity_id;
-            $scope.grupos.push(response.data.sms);
+            $scope.grupos = response.data;
             console.log(response);
           }, function error(response) {
             
@@ -47,9 +44,7 @@ angular.module('vista')
       } else{
         activityService.mostrarGruposEstudiante().then(
           function success(response) {
-            $scope.types = response.data.users_type;
-            $scope.activity_id = response.data.sms.activity_id;
-            $scope.grupos.push(response.data.sms);
+            $scope.grupos = response.data;
             console.log(response);
           }, function error(response) {
             console.log(response);
@@ -60,10 +55,15 @@ angular.module('vista')
     $scope.LogOut = function(){
   		AuthService.signOut();
   	};
-    $scope.ver = function(){
+    $scope.ver = function(id_grupo){
       var modalInstance = $uibModal.open({
         templateUrl: 'partial_views/groups/reportGroup.html',
-        controller: 'reportCtrl as reportGro'
+        controller: 'reportCtrl as reportGro',
+        resolve: {
+          grupo: function(){
+            return id_grupo
+          }
+        }
       })
     };
     $scope.crear = function(){
