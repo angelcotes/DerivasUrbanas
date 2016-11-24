@@ -35,11 +35,11 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
-  data_Credencial.iniciarActividad = function(data, estado){
+  data_Credencial.iniciarActividad = function(data, estado, times){
     var data_final = {
       activity_id: data.id,
       id: StorageService.get('currentUser').id,
-      time: new Date(Date.now()),
+      time: times,
       estado: estado
     }
     return  $http({

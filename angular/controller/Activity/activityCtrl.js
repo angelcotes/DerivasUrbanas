@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('vista')
-  .controller('activityCtrl', function ($interval, $window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
+  .controller('activityCtrl', function ($interval, MyWorker, $window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
     $scope.types = StorageService.get('currentUser').users_type;
     $scope.times = 30000;
+    MyWorker.prototype.verificar();
     var firebaseRef = firebase.database().ref();
     StorageService.clean('dataActivity');
     var mapOptions = {
@@ -108,81 +109,7 @@ angular.module('vista')
       StorageService.set('dataActivity', actividad);
       $location.path('groups');
     };
-    $scope.ejecutar = function(actividad){
-      var date1 = new Date(Date.now());
-      if (date1 <= new Date(actividad.finish_date)) {
-        navigator.geolocation.getCurrentPosition(function(respuesta) {
-
-          var pointA = new google.maps.LatLng(respuesta.coords.latitude, respuesta.coords.longitude);
-          var pointB = new google.maps.LatLng(parseFloat(actividad.latitude), parseFloat(actividad.longitude));
-          var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
-          if (distanceBetweenPoints >= parseFloat(actividad.range)) {
-            $interval.cancel(interval, "pausado");
-            activityService.iniciarActividad(actividad, "ejecutado").then(
-              function succes(response){
-                $interval.cancel(interval);
-                console.log(response.sms);
-              },function error(response){
-                console.log(response.sms);
-              }
-            );
-          } else{
-            firebaseRef.child("User_id_" + StorageService.get('currentUser').id).child("Act_id_" + actividad.id).push().set({Latitud: respuesta.coords.latitude, Longitud: respuesta.coords.longitude});
-            activityService.iniciarActividad(actividad, "ejecutado").then(
-              function succes(response){
-                console.log(response.sms);
-              },function error(response){
-                console.log(response.sms);
-              }
-            );
-          };
-        }, function(error) {
-          $interval.cancel(interval);
-          console.log('Para poder ver la actividad debe habilitar la geolocalizacion. Ingrese nuevamente a la pagina.');
-        });
-      } else {
-        $interval.cancel(interval);
-        console.log('Esta actividad a finalizado');
-      };
-    };
     $scope.startActiviry = function(actividad){
-      $scope.ejecutar(actividad);
-      var interval = $interval(function () {
-        var date1 = new Date(Date.now());
-        if (date1 <= new Date(actividad.finish_date)) {
-          navigator.geolocation.getCurrentPosition(function(respuesta) {
-
-            var pointA = new google.maps.LatLng(respuesta.coords.latitude, respuesta.coords.longitude);
-            var pointB = new google.maps.LatLng(parseFloat(actividad.latitude), parseFloat(actividad.longitude));
-            var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
-            if (distanceBetweenPoints >= parseFloat(actividad.range)) {
-              $interval.cancel(interval, "pausado");
-              activityService.iniciarActividad(actividad, "ejecutado").then(
-                function succes(response){
-                  $interval.cancel(interval);
-                  console.log(response.sms);
-                },function error(response){
-                  console.log(response.sms);
-                }
-              );
-            } else{
-              firebaseRef.child("User_id_" + StorageService.get('currentUser').id).child("Act_id_" + actividad.id).push().set({Latitud: respuesta.coords.latitude, Longitud: respuesta.coords.longitude});
-              activityService.iniciarActividad(actividad, "ejecutado").then(
-                function succes(response){
-                  console.log(response.sms);
-                },function error(response){
-                  console.log(response.sms);
-                }
-              );
-            };
-          }, function(error) {
-            $interval.cancel(interval);
-            console.log('Para poder ver la actividad debe habilitar la geolocalizacion. Ingrese nuevamente a la pagina.');
-          });
-        } else {
-          $interval.cancel(interval);
-          console.log('Esta actividad a finalizado');
-        };
-      }, $scope.times);
+      MyWorker.prototype.start(actividad);
     };
 });

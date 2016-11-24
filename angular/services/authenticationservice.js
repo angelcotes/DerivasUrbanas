@@ -27,6 +27,8 @@ angular.module('vista')
               users_type: response.data.data.users_type
             };
             StorageService.clear();
+            StorageService.set('activity_start', {state: false});
+            StorageService.set('dateStart', false);
             StorageService.set('headers', headers);
             StorageService.set('currentUser', currentUser);
             $rootScope.dataShouldPersist = authAttempt.remember;

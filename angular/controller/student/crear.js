@@ -18,8 +18,8 @@ angular.module('vista')
             if (response.data.successful_data.length > 0) {
               ViewActiv.crearEstudiante({data: response.data.successful_data}, StorageService.get('dataCurso').id).then(
                 function success(response) {
-                  $route.reload();
                   $uibModalInstance.close('a');
+                  $route.reload();
                   alert('Estudiantes agregados');
                 }
               );

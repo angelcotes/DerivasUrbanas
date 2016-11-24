@@ -44,6 +44,15 @@ angular.module('vista')
       headers: StorageService.get('headers')
     })
   };
+  data_Credencial.guardarDocumento = function(files, grupo){
+    return $http({
+      method: 'POST',
+      url: BASE_URL + "users/" + StorageService.get('currentUser').id + "/group/" + grupo + "/documents",
+      headers: {'Content-Type': undefined },
+      transformRequest: angular.identity,
+      data: files
+    })
+  };
   data_Credencial.crearActividad = function (dataActvidad, course_id){
     return $http({
       method: 'POST',
@@ -67,7 +76,10 @@ angular.module('vista')
       data: dataEstudiante,
       headers: StorageService.get('headers')
     })
-  }
+  };
+  data_Credencial.eliminarDocumento = function(id_documento){
+    return $http.delete(BASE_URL + 'users/' + id_documento + '/document')
+  };
   data_Credencial.EliminarCurso = function (dataCurso){
     return $http.delete(BASE_URL + url + '/' + dataCurso.id, {'headers': StorageService.get('headers'), 'data': dataCurso})
   };

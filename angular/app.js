@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTagsInput'])
-.constant('BASE_URL', 'http://localhost:3000/')
+.constant('BASE_URL', 'http://ec2-52-21-228-235.compute-1.amazonaws.com:3000/')
 .config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = "*";
@@ -45,7 +45,7 @@ angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTag
         controller: 'LoginCtrl as login'
     }).otherwise({ redirectTo: '/home' })
 })
-.run(function (StorageService, $rootScope, $location) {
+.run(function (StorageService, $rootScope, $location, MyWorker) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         var user = StorageService.get('headers');
         if (StorageService.get('headers') === undefined) {

@@ -66,7 +66,7 @@ angular.module('vista')
        }, 1000);
     });
     $scope.crearActivity = function(actividad){
-      ids = $scope.actividad.nrcs.split(",");
+      ids = $scope.actividad.nrc.split(",");
       /*necesito el ID del curso*/
       ViewActiv.crearActividad($scope.actividad, ids[0]).then(
         function success(response) {

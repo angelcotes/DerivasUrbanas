@@ -6,22 +6,40 @@
         <div id="map-canvas" style="width: 100%; height: 500px;" ng-click="markerPos()"></div>
 		<div class="caption">
 			<div>
-                <table class="table grupos table-fixed">
-                  <thead class="thead-inverse">
-                    <tr>
-                      <th class="col-xs-4">Apellidos</th><th class="col-xs-2">Nombre</th><th class="col-xs-5">Rol</th><th class="col-xs-1">Opciones</th>
-                    </tr>
-                  </thead>
-                  <tbody class="datos">
-                    <tr  ng-repeat="estudiante in data_miembros">
-                      <td class="col-xs-4">{{estudiante.last_name}}</td>
-                      <td class="col-xs-2">{{estudiante.first_name}}</td>
-                      <td class="col-xs-5">{{estudiante.rol}}</td>
-                      <td class="col-xs-1"><a href="" class="btn btn-primary" role="button" ng-click="ruta(estudiante)"><i class="fa fa-map-marker" aria-hidden="true"></i></a></td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
+        <table class="table grupos table-fixed">
+          <thead class="thead-inverse">
+            <tr>
+              <th class="col-xs-2">Nombre</th><th class="col-xs-2">Rol</th><th class="col-xs-6">Subir archivo</th><th class="col-xs-2">Opciones</th>
+            </tr>
+          </thead>
+          <tbody class="datos">
+            <tr  ng-repeat="estudiante in data_miembros">
+              <td class="col-xs-2">{{estudiante.first_name}}</td>
+              <td class="col-xs-2">{{estudiante.rol}}</td>
+              <td class="col-xs-6"><input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files, angular.element(this).scope().estudiante)" style="width: 100%;"/></td>
+              <td class="col-xs-2"><a href="" class="btn btn-primary" role="button" ng-click="ruta(estudiante)"><i class="fa fa-map-marker" aria-hidden="true"></i></a></td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3> Documentos</h3>
+        <table class="table grupos table-fixed">
+          <thead class="thead-inverse">
+            <tr>
+              <th class="col-xs-4">Nombre</th><th class="col-xs-4">Propietario</th><th class="col-xs-4">Opciones</th>
+            </tr>
+          </thead>
+          <tbody class="datos">
+            <tr  ng-repeat="documento in documentos">
+              <td class="col-xs-4">{{documento.name}}</td>
+              <td class="col-xs-4">{{documento.first_name}}</td>
+              <td class="col-xs-4"><a class="btn btn-danger" role="button" style="margin: 5px;" ng-click="eliminar(documento)"><i class="fa fa-trash-o" aria-hidden="true" ></i></a><a class="btn btn-info" role="button" ng-click="view(documento.url)"><i class="fa fa-eye" aria-hidden="true"></i></a> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 		</div>
 	</div>
 </div>

@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('vista')
-  .controller('groupsCtrl', function ($window,$scope, $uibModal, AuthService, $route, activityService, $location, StorageService) {
+  .controller('groupsCtrl', function ($window, MyWorker, $scope, $uibModal, AuthService, $route, activityService, $location, StorageService) {
     $scope.types = StorageService.get('currentUser').users_type;
+    MyWorker.prototype.verificar();
     if ($scope.types == 'Teacher') {
       if (StorageService.get('dataCurso') != undefined && StorageService.get('dataActivity') != undefined) {
         activityService.mostrarGrupos().then(
