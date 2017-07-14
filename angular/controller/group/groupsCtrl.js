@@ -37,7 +37,6 @@ angular.module('vista')
         activityService.mostrarGrupoEstudiante(StorageService.get('dataActivity')).then(
           function success(response) {
             $scope.grupos = response.data;
-            console.log(response);
           }, function error(response) {
             
           }
@@ -46,9 +45,8 @@ angular.module('vista')
         activityService.mostrarGruposEstudiante().then(
           function success(response) {
             $scope.grupos = response.data;
-            console.log(response);
           }, function error(response) {
-            console.log(response);
+            alert(response);
           }
         );
       };

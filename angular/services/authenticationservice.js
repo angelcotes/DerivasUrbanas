@@ -55,7 +55,7 @@ angular.module('vista')
     };
     
   };
-  authService.addManyUsers = function (dataUsers){
+  authService.addManyUsers = function (dataUsers, course_id){
     return $http({
       method: 'POST',
       url: BASE_URL + 'import',
@@ -63,11 +63,14 @@ angular.module('vista')
         'Content-Type': 'multipart/form-data'
       },
       data: {
-        upload: dataUsers
+        upload: dataUsers,
+        course_id: course_id
       },
       transformRequest: function (data, headersGetter) {
         var formData = new FormData();
         angular.forEach(data, function (value, key) {
+          console.log(key);
+          console.log(value);
           formData.append(key, value);
         });
         return formData;

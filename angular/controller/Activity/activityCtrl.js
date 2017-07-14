@@ -4,6 +4,8 @@ angular.module('vista')
   .controller('activityCtrl', function ($interval, MyWorker, $window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
     $scope.types = StorageService.get('currentUser').users_type;
     $scope.times = 30000;
+    $('#startDate').datepicker();
+    $('#finishDate').datepicker();
     MyWorker.prototype.verificar();
     var firebaseRef = firebase.database().ref();
     StorageService.clean('dataActivity');

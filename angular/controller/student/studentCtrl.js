@@ -35,7 +35,6 @@ angular.module('vista')
       })
     }
     $scope.eliminarData = function(dataStudent){
-      console.log(dataStudent);
       activityService.EliminarActividad('courses/' + dataStudent.course.id + '/students/' + dataStudent.id).then(
         function success(response) {
           $route.reload();

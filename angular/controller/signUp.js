@@ -2,10 +2,7 @@
 
 angular.module('vista')
 .controller('singUpCtrl', function ($scope, AuthService) {
-	$scope.sendata = function (user) {
-		$scope.user.users_type = 'Teacher';
-		console.log(user);
-		console.log($scope);      
+	$scope.sendata = function (user) {    
 	  AuthService.signUp($scope.user);
 	};
 });

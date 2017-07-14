@@ -31,7 +31,9 @@ angular.module('vista')
           divMapa = new google.maps.Map(document.getElementById('map-canvas'), {
             center: {lat: latitud, lng: longitud},
             zoom: 17
-          });
+          });          
+          $('#startDate').datepicker();
+          $('#finishDate').datepicker();
           google.maps.event.addListener(divMapa, 'click', function(event){
             var radius = document.getElementById('Radius').value;
             if (Number(radius) === 0) {
@@ -66,7 +68,7 @@ angular.module('vista')
        }, 1000);
     });
     $scope.crearActivity = function(actividad){
-      ids = $scope.actividad.nrc.split(",");
+      var ids = $scope.actividad.nrc.split(",");
       /*necesito el ID del curso*/
       ViewActiv.crearActividad($scope.actividad, ids[0]).then(
         function success(response) {

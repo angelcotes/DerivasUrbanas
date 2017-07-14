@@ -1,5 +1,17 @@
 angular.module('vista')
-  .controller('crear', function ($uibModalInstance, $route, $scope, ViewActiv, $location, $route, StorageService, AuthService) {
+  .controller('crear', function ($uibModal, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, AuthService) {
+    $scope.sms = function(dataSms){
+      var modalInstance = $uibModal.open({
+        templateUrl: 'partial_views/message/modalSms.html',
+        controller: 'smsCtrl as smsC',
+        resolve: {
+          data: function(){
+            return dataSms;
+          }
+        }
+      });
+      $route.reload();
+    };
     $scope.cancelar = function(){
       $uibModalInstance.close('a');
       $route.reload();
@@ -10,62 +22,39 @@ angular.module('vista')
     }
     $scope.crearEstudiante = function(){
       if (StorageService.get('dataCurso') != null) {
-        console.log($scope.dataEmails);
-        $scope.data_emails = {}
-        AuthService.addManyUsers($scope.dataEmails).then(
+        $scope.sms('Los estudiantes han sido agregados, por favor espere mientras se envian las contraseñas a los estudiantes.');
+        $uibModalInstance.close('a');
+        AuthService.addManyUsers($scope.dataEmails, StorageService.get('dataCurso').id).then(
           function success(response) {
-            console.log(response);
             if (response.data.successful_data.length > 0) {
-              ViewActiv.crearEstudiante({data: response.data.successful_data}, StorageService.get('dataCurso').id).then(
-                function success(response) {
-                  $uibModalInstance.close('a');
-                  $route.reload();
-                  alert('Estudiantes agregados');
-                }
-              );
+                $route.reload();
+                $scope.sms('Proceso de inscripcion de estudiantes terminado.');
             };
             if(response.data.error_data.length > 0){
               var error = "";
               response.data.error_data.forEach(function(emails){
                 error = error + " " + emails
               });
-              alert('Correos con problemas:' + error);
+              $scope.sms('Correos con problemas:' + error);
             };
             $uibModalInstance.close('a');
             $route.reload();
           }
         );
-        /*estudiantes.email.forEach(function(email_item){
-          $scope.data_emails.push({'email': email_item.text, 'course_id': StorageService.get('dataCurso').id});
-        });*/
-        /*ViewActiv.crearEstudiante({data: $scope.data_emails}, StorageService.get('dataCurso').id).then(
-          function success(response) {
-            $route.reload();
-            alert('Actividad Editada');
-            $route.reload();
-          },
-          function error(response){
-            var error = "";
-            response.config.data.data.forEach(function(emails){
-              error = error + " " + emails.email
-            });
-            alert('Correos no registrados:' + error);
-          }
-        );*/
       } else{
         $route.reload();
-        alert('Estudiantes sin curso asignado');
+        $scope.sms('Los estudiantes que se desean inscribir no tienen un curso asociado.');
+        $uibModalInstance.close('a');
       };
     };
     $scope.editar = function(estudiantes){
       ViewActiv.editarActividad(actividad).then(
         function success(response) {
           $route.reload();
-          alert('Actividad Editada');
-          $route.reload();
+          $scope.sms('Actividad editada');
         }, function error(response){
           $route.reload();
-          alert('Usuario no autorizado');
+          $scope.sms('Usuario no autorizado');
         }
       );
       $uibModalInstance.close('a');

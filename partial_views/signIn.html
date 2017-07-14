@@ -28,16 +28,13 @@
             <input type="text" class="form-control" placeholder="Last name" ng-model="user.last_name" name="lastname" required>
             <div class="alert alert-danger" role="alert" ng-show="frm.lastname.$dirty && frm.lastname.$error.required">Ingrese un apellido</div>
           </div>
-          <div class="form-group" style="width: 100%;">
-            <div class="input-group" style="width: 100%;">
-              <div class="btn-group" data-toggle="buttons" style="width: 100%;">
-                <label class="btn btn-default" style="width: 50%;">
-                  <input type="radio" ng-model="user.users_type">Teacher
-                </label>
-                <label class="btn btn-default" style="width: 50%;">
-                  <input type="radio" ng-model="user.users_type">Student
-                </label>
-              </div>
+          <div class="form-group">
+            <label>Tipo de usuario</label>
+            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+              <select name="singleSelect" ng-model="user.users_type" style="height: 30px;">
+                <option value="Teacher">Profesor</option>
+                <option value="Student">Estudiante</option>
+              </select>
             </div>
           </div>
           <div class="btn_view">

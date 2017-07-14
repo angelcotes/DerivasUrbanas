@@ -4,11 +4,19 @@
 <div class="modal-body">
 	<div class="thumbnail">
 		<div class="caption">
-
+      <h2>{{format}}</h2>
+      <div ng-show="format == 'jpg' || format == 'png'">
+        <img ng-src="{{url}}" style="width: 100%;">
+      </div>
+      <div ng-show="format == 'mp4'">
+        <video ng-src="{{url}}" style="width: 100%;"></video>
+      </div>
+      <div ng-show="format == 'mp3' || format == 'wav'">
+        <audio ng-src="{{url}}"></audio>
+      </div>
 		</div>
 	</div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn" ng-click="cancelar()">cerrar</button>
-  <button class="btn btn-primary" ng-click="editar(actividad)">aceptar</button>
 </div>

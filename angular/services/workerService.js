@@ -13,7 +13,7 @@ angular.module('vista')
             $interval(function () {
                 navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
                 function fn_error(){
-                  console.log('Debe activar el GPS');
+                  alert('Debe activar el GPS');
                 }
                 function fn_ok(respuesta){
                     var date1 = new Date();
@@ -32,7 +32,7 @@ angular.module('vista')
     MyWorker.prototype.start = function(actividad) {
         navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
         function fn_error(){
-          console.log('Para poder iniciar la actividad debe activar el GPS');
+          alert('Para poder iniciar la actividad debe activar el GPS');
         }
         function fn_ok(respuesta){
             var date1 = new Date();

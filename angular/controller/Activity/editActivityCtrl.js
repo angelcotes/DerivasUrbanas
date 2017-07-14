@@ -16,6 +16,8 @@ angular.module('vista')
           center: latlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+        $('#startDate').datepicker();
+        $('#finishDate').datepicker();
         var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
         marker = new google.maps.Marker({
           position: latlng,

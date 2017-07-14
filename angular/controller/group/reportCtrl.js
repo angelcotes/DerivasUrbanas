@@ -7,6 +7,7 @@ angular.module('vista')
       function initialize() {
         navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
         var divMapa = document.getElementById('map-canvas');
+        $(".cargando").hide();
         var data_time = new Date();
         function fn_error(){
           divMapa.innerHTML = 'Para poder ver la actividad debe habilitar la geolocalizacion. Ingrese nuevamente a la pagina.';
@@ -55,43 +56,60 @@ angular.module('vista')
       $uibModalInstance.close('a');
     };
     $scope.uploadFile = function(files, estudiante) {
-      var fd = new FormData();
-      var binary_reader = new FileReader();
-      binary_reader.file = files[0];
+      var file = files[0];
       //Take the first selected file
       if (estudiante.user_id == StorageService.get('currentUser').id) {
-        fd.append("file", files[0]);
-        EXIF.getData(binary_reader.file, function() {
-          var MetaData = EXIF.getAllTags(this);
-          console.log(grupo);
-          var lat = MetaData.GPSLatitude;
-          var lon = MetaData.GPSLongitude;
-          var latRef = MetaData.GPSLatitudeRef || "N";  
-          var lonRef = MetaData.GPSLongitudeRef || "W";
-          if (lat != undefined && lon != undefined ) { 
-            lat = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);  
-            lon = (lon[0] + lon[1]/60 + lon[2]/3600) * (lonRef == "W" ? -1 : 1); 
-            console.log(lat);
-            console.log(lon);
-            var pointA = new google.maps.LatLng(lat, lon);
+        $(".archivo").hide();
+        $(".cargando").show();
+        var fd = new FormData();
+        fd.append("file", file);
+        if (new Date(file.lastModified) >= new Date(estudiante.time_start) && new Date(file.lastModified) <= new Date(estudiante.time_finished)) {
+            ViewActiv.guardarDocumento(fd, grupo).then(
+              function success(response) {
+                $route.reload();
+                $(".cargando").hide();
+                alert("Documento guardado");
+                $uibModalInstance.close('a');
+                $(".archivo").show();
+              }, function error(response){
+                $route.reload();
+                $(".cargando").hide();
+                $(".archivo").show();
+              }
+            );
+        } else{
+          alert('Documento creado fuera del tiempo permitido para esta actividad');
+        };
+        /*EXIF.getData(file, function() {
+          console.log('Entre');
+          //var MetaData = EXIF.getAllTags(file);
+          if (MetaData.GPSLatitude != undefined && MetaData.GPSLongitude != undefined ) {
+            var latitude = [];
+            var longitude = [];
+            latitude = MetaData.GPSLatitude;
+            longitude = MetaData.GPSLongitude;
+            var latRef = MetaData.GPSLatitudeRef || "N";  
+            var lonRef = MetaData.GPSLongitudeRef || "W";
+            latitude = (latitude[0] + latitude[1]/60 + latitude[2]/3600) * (latRef == "N" ? 1 : -1);  
+            longitude = (longitude[0] + longitude[1]/60 + longitude[2]/3600) * (lonRef == "W" ? -1 : 1); 
+            var pointA = new google.maps.LatLng(latitude, longitude);
             var pointB = new google.maps.LatLng(parseFloat(estudiante.latitude), parseFloat(estudiante.longitude));
             var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
             if (distanceBetweenPoints <= parseFloat(estudiante.range)  && binary_reader.file.lastModifiedDate >= new Date(estudiante.time_start) && binary_reader.file.lastModifiedDate <= new Date(estudiante.time_finished)) {
               ViewActiv.guardarDocumento(fd, grupo).then(
                 function success(response) {
-                  console.log(response);
+                  $uibModalInstance.close('a');
                   $route.reload();
                   alert("Documento guardado");
                 }, function error(response){
-                  console.log(response);
+                  alert(response);
                   $route.reload();
                 }
               );
-              $uibModalInstance.close('a');
             } else{
               alert('Documento creado fuera del tiempo permitido para esta actividad');
             };
-          } else if (binary_reader.file.lastModifiedDate >= new Date(estudiante.time_start) && binary_reader.file.lastModifiedDate <= new Date(estudiante.time_finished)) {
+          } else if (file.lastModifiedDate >= new Date(estudiante.time_start) && file.lastModifiedDate <= new Date(estudiante.time_finished)) {
               ViewActiv.guardarDocumento(fd, grupo).then(
                 function success(response) {
                   $route.reload();
@@ -104,10 +122,10 @@ angular.module('vista')
           } else{
             alert('Documento creado fuera del tiempo permitido para esta actividad');
           };
-        });       
+        }); */      
       }else{
         alert('No puede subir archivos desde este enlace');
-      }; 
+      };
     };
     $scope.ruta = function(estudiante){
       var flightPlanCoordinates = [];
@@ -130,9 +148,15 @@ angular.module('vista')
       });
     };
     $scope.view = function(data){
-      $scope.imgs = data;
+      console.log(data);
       var modalInstance = $uibModal.open({
-        templateUrl: 'partial_views/groups/viewDocument.html'
+        templateUrl: 'partial_views/groups/viewDocument.html',
+        controller: 'viewDocCtrl as ViewFile',
+        resolve: {
+          data: function(){
+            return data
+          }
+        }
       })
     };
     $scope.eliminar = function(documento){
@@ -141,7 +165,7 @@ angular.module('vista')
           $route.reload();
           alert("Documento eliminado");
         }, function error(response){
-          console.log(response);
+          alert(response);
           $route.reload();
         }
       );

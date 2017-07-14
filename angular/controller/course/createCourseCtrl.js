@@ -1,17 +1,28 @@
 'use strict';
 
 angular.module('vista')
-  .controller('createCourseCtrl', function ($uibModalInstance, $scope, ViewActiv, $location, $route, id, name, period, user_id, nrc) {
+  .controller('createCourseCtrl', function ($uibModal, $uibModalInstance, $scope, ViewActiv, $location, $route, id, name, period, user_id, nrc) {
     $scope.course = {name: name, period: period, nrc: nrc};
+    $scope.sms = function(dataSms){
+      var modalInstance = $uibModal.open({
+        templateUrl: 'partial_views/message/modalSms.html',
+        controller: 'smsCtrl as smsC',
+        resolve: {
+          data: function(){
+            return dataSms;
+          }
+        }
+      });
+      $route.reload();
+    };
     $scope.crearCursoModal = function(){
   		ViewActiv.crearCurso($scope.course).then(
         function success(response) {
-          alert('Curso creado');
-          $route.reload();
+          $scope.sms("Curso Creado");
           $location.path("activity");
         }, function error(response){
+          $scope.sms(response.data);
           $route.reload();
-          alert(response.data);
         }
       );
       $uibModalInstance.close('a');
@@ -20,7 +31,6 @@ angular.module('vista')
       $uibModalInstance.close('a');
     };
     $scope.edit = function(){
-      console.log($scope);
       var data = {
         name: $scope.course.name,
         period: $scope.course.period,
@@ -30,12 +40,11 @@ angular.module('vista')
       };
       ViewActiv.editarCurso(data).then(
         function success(response) {
-          $route.reload();
-          alert('Curso Editado');
+          $scope.sms("Curso Editado");
           $route.reload();
         }, function error(response){
+          $scope.sms(response.data);
           $route.reload();
-          alert(response.data);
         }
       );
       $uibModalInstance.close('a');

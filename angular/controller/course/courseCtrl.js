@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('vistaCtrl', function ($scope, MyWorker,$uibModal, $route,AuthService, ViewActiv, $location, StorageService) {
+  .controller('vistaCtrl', function ($scope, MyWorker, $uibModal, $route,AuthService, ViewActiv, $location, StorageService) {
   	StorageService.clean('dataCurso');
     StorageService.clean('dataActivity');
     MyWorker.prototype.verificar();
@@ -10,6 +10,9 @@ angular.module('vista')
       ViewActiv.mostrarCursos().then(
         function success(response) {
           $scope.cursos = response.data;
+          angular.forEach($scope.cursos, function(value, key) {
+            value.course_nrc = value.nrc;
+          });
         }, function error(response) {
           alert(response);
         }
