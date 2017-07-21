@@ -1,5 +1,6 @@
 angular.module('vista')
   .controller('crear', function ($uibModal, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, AuthService) {
+    $scope.datafile = "";
     $scope.sms = function(dataSms){
       var modalInstance = $uibModal.open({
         templateUrl: 'partial_views/message/modalSms.html',
@@ -18,10 +19,16 @@ angular.module('vista')
     };
     $scope.checkFormat = function(files) {
       //Take the first selected file
-      $scope.dataEmails = files[0];
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $scope.dataEmails = e.target.result;
+      }
+      reader.readAsText(files[0]);
     }
     $scope.crearEstudiante = function(){
       if (StorageService.get('dataCurso') != null) {
+        $scope.dataEmails = $scope.dataEmails.replace("\"", "");
+        console.log($scope.dataEmails.length);
         $scope.sms('Los estudiantes han sido agregados, por favor espere mientras se envian las contraseñas a los estudiantes.');
         $uibModalInstance.close('a');
         AuthService.addManyUsers($scope.dataEmails, StorageService.get('dataCurso').id).then(
