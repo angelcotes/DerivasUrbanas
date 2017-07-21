@@ -56,7 +56,6 @@ angular.module('vista')
     
   };
   authService.addManyUsers = function (dataUsers, course_id){
-    console.log(dataUsers);
     return $http({
       method: 'POST',
       url: BASE_URL + 'import',

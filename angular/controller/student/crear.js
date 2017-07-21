@@ -28,7 +28,6 @@ angular.module('vista')
     $scope.crearEstudiante = function(){
       if (StorageService.get('dataCurso') != null) {
         $scope.dataEmails = $scope.dataEmails.replace("\"", "");
-        console.log($scope.dataEmails.length);
         $scope.sms('Los estudiantes han sido agregados, por favor espere mientras se envian las contraseñas a los estudiantes.');
         $uibModalInstance.close('a');
         AuthService.addManyUsers($scope.dataEmails, StorageService.get('dataCurso').id).then(

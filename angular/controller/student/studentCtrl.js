@@ -25,8 +25,8 @@ angular.module('vista')
   	};
     $scope.agregar = function(){
       var modalInstance = $uibModal.open({
-        templateUrl: 'partial_views/student/createStudent.html',
-        controller: 'crear as create'
+        templateUrl: 'partial_views/student/createOption.html',
+        controller: 'optionCreation as option'
       })
     }
     $scope.editar = function(actividad){

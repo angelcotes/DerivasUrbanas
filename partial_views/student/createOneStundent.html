@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h1>Agregar Estudiante</h1>
+</div><!-- /.modal -->
+<div class="modal-body">
+	<div class="thumbnail">
+		<div class="caption">
+	      <h2>Datos</h2>	      
+	      <div class="form-group">
+	        <label>Nombre</label>
+	        <input type="text" class="form-control" placeholder="nombre" id ="name" ng-model="estudiante.name">
+	      </div>
+	      <div class="form-group">
+	        <label>Apellidos</label>
+	        <input type="text" class="form-control" placeholder="apellidos" id="apellidos" ng-model="estudiante.lastNames">
+	      </div>
+	      <div class="form-group">
+	        <label>Codigo</label>
+	        <input type="text" class="form-control" placeholder="123456" id="code" ng-model="estudiante.code">
+	      </div>
+	      <div class="form-group">
+	        <label>Usuario</label>
+	        <input type="text" class="form-control" id="reference" placeholder="usuario" ng-model="estudiante.username">
+	      </div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="cancelar()">cerrar</button>
+  <button class="btn btn-primary" ng-click="crearEstudiante(estudiante)">aceptar</button>
+</div>
