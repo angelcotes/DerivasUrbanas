@@ -32,7 +32,7 @@ angular.module('vista')
             StorageService.set('headers', headers);
             StorageService.set('currentUser', currentUser);
             $rootScope.dataShouldPersist = authAttempt.remember;
-            $location.path("activity");
+            $location.path("courses");
           }, function error(response) {
             alert(response.data.errors);
         }

@@ -14,7 +14,7 @@ angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTag
 ])
 .config(function ($routeProvider) {
   $routeProvider
-    .when('/activity',{
+    .when('/courses',{
         templateUrl: 'partial_views/activity.html',
         controller: 'vistaCtrl as activ'
     })
@@ -33,7 +33,7 @@ angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTag
     .when('/contact',{
         templateUrl: 'partial_views/contact.html'
     })
-    .when('/courses',{
+    .when('/activity',{
         templateUrl: 'partial_views/courses.html',
         controller: 'activityCtrl as activC'
     })

@@ -33,7 +33,7 @@ angular.module('vista')
   	};
     $scope.ver = function(dataCurso){
       StorageService.set('dataCurso', dataCurso);
-      $location.path('courses');
+      $location.path('activity');
     };
     $scope.estudiantes = function(dataCurso){
       StorageService.set('dataCurso', dataCurso);

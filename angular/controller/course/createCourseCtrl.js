@@ -19,7 +19,7 @@ angular.module('vista')
   		ViewActiv.crearCurso($scope.course).then(
         function success(response) {
           $scope.sms("Curso Creado");
-          $location.path("activity");
+          $location.path("courses");
         }, function error(response){
           $scope.sms(response.data);
           $route.reload();

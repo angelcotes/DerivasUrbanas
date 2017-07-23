@@ -9,6 +9,5 @@ angular.module('vista')
     };
     $scope.LogOut = function () {
       AuthService.signOut();
-      console.log($scope);
     };
   });

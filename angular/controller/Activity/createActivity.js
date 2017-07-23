@@ -74,11 +74,11 @@ angular.module('vista')
         function success(response) {
           $route.reload();
           alert('Actividad creada');
-          $location.path("courses");
+          $location.path("activity");
           $uibModalInstance.close('a');
         }, function error(response){
           $route.reload();
-          $location.path("courses");
+          $location.path("activity");
           alert('Usuario no autorizado');
           $uibModalInstance.close('a');
         }
