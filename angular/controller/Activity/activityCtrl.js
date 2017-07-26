@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('activityCtrl', function ($interval, MyWorker, $window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
+  .controller('activityCtrl', function ($interval, MyWorker, $window, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService, ngNotify) {
     $scope.types = StorageService.get('currentUser').users_type;
     $scope.times = 30000;
     $('#startDate').datepicker();
@@ -29,7 +29,7 @@ angular.module('vista')
             }           
             google.maps.event.addDomListener(window, 'load', $scope.initialize);
           }, function error(response) {
-            alert(response.data);
+            ngNotify.set(response.data, 'error');
           }
         );
       } else{
@@ -41,7 +41,7 @@ angular.module('vista')
             }           
             google.maps.event.addDomListener(window, 'load', $scope.initialize);
           }, function error(response) {
-            alert(response.data);
+            ngNotify.set(response.data, 'error');
           }
         );
       };
@@ -65,7 +65,7 @@ angular.module('vista')
             }           
             google.maps.event.addDomListener(window, 'load', $scope.initialize);
           }, function error(response) {
-            alert(response);
+            ngNotify.set(response.data, 'error');
           }
         );
       };
@@ -99,11 +99,11 @@ angular.module('vista')
     $scope.eliminarData = function(dataActivity){
       activityService.EliminarActividad('courses/' + dataActivity.course_nrc + '/activities/' + dataActivity.id).then(
         function success(response) {
-          alert('Actividad eliminada');
+          ngNotify.set('Actividad eliminada', 'success');
           $location.path('courses');
           $route.reload();
         }, function error(response) {
-          alert(response);
+          ngNotify.set(response.data, 'error');
         }
       );  
     };

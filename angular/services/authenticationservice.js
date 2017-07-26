@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-.factory('AuthService', function ($http, $rootScope, $location, BASE_URL, StorageService) {
+.factory('AuthService', function ($http, $rootScope, $location, BASE_URL, StorageService, ngNotify) {
   var authService = {};
 
   authService.login = function (authAttempt) {
@@ -34,7 +34,7 @@ angular.module('vista')
             $rootScope.dataShouldPersist = authAttempt.remember;
             $location.path("courses");
           }, function error(response) {
-            alert(response.data.errors);
+            ngNotify.set(argument.data.errors, 'error');
         }
       );       
     };      
@@ -49,7 +49,7 @@ angular.module('vista')
             StorageService.clear();
             $location.path('home');
           }, function error(argument) {
-            alert(argument.data.errors);
+            ngNotify.set(argument.data.errors, 'error');
           }
       );
     };
@@ -74,9 +74,10 @@ angular.module('vista')
     .then(
       function success(response) {
         StorageService.clear();
+        ngNotify.set('Cuenta Creada', 'success');
         $location.path('/home');
       }, function error(argument) {
-        alert(argument.data.errors);
+        ngNotify.set(argument.data.errors.full_messages, 'error');
       }
     );
   };

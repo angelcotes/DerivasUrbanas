@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('vistaCtrl', function ($scope, MyWorker, $uibModal, $route,AuthService, ViewActiv, $location, StorageService) {
+  .controller('vistaCtrl', function ($scope, MyWorker, $uibModal, $route,AuthService, ViewActiv, $location, StorageService, ngNotify) {
   	StorageService.clean('dataCurso');
     StorageService.clean('dataActivity');
     MyWorker.prototype.verificar();
@@ -14,7 +14,7 @@ angular.module('vista')
             value.course_nrc = value.nrc;
           });
         }, function error(response) {
-          alert(response);
+          ngNotify.set(response.data, 'error');
         }
       );
     }
@@ -24,7 +24,7 @@ angular.module('vista')
           console.log(response);
           $scope.cursos = response.data;
         }, function error(response) {
-          alert(response);
+          ngNotify.set(response.data, 'error');
         }
       );
     }
@@ -89,10 +89,10 @@ angular.module('vista')
       console.log(curso);
       ViewActiv.EliminarCurso(curso).then(
         function success(response){
+          ngNotify.set('Curso eliminado', 'success');
           $route.reload();
-          alert('Curso eliminado');
         }, function error(response){
-          alert('El curso no se pudo eliminar');
+          ngNotify.set('El curso no se pudo eliminar', 'error');
         }
       );
     };

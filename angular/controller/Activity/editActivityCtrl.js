@@ -1,5 +1,5 @@
 angular.module('vista')
-  .controller('editActivityCtrl', function ($timeout, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, data) {
+  .controller('editActivityCtrl', function ($timeout, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, data, ngNotify) {
     var marker = new google.maps.Marker();
     var cityCircle = new google.maps.Circle;
     $scope.actividad = data;
@@ -66,11 +66,10 @@ angular.module('vista')
       ViewActiv.editarActividad(actividad).then(
         function success(response) {
           $route.reload();
-          alert('Actividad Editada');
-          $route.reload();
+          ngNotify.set('Actividad editada', 'success');
         }, function error(response){
           $route.reload();
-          alert('Usuario no autorizado');
+          ngNotify.set(response.data, 'error');
         }
       );
       $uibModalInstance.close('a');

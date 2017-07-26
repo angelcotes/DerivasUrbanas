@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('createCourseCtrl', function ($uibModal, $uibModalInstance, $scope, ViewActiv, $location, $route, id, name, period, user_id, nrc) {
+  .controller('createCourseCtrl', function ($uibModal, $uibModalInstance, $scope, ViewActiv, $location, $route, id, name, period, user_id, nrc, ngNotify) {
     $scope.course = {name: name, period: period, nrc: nrc};
     $scope.sms = function(dataSms){
       var modalInstance = $uibModal.open({
@@ -18,10 +18,10 @@ angular.module('vista')
     $scope.crearCursoModal = function(){
   		ViewActiv.crearCurso($scope.course).then(
         function success(response) {
-          $scope.sms("Curso Creado");
-          $location.path("courses");
+          ngNotify.set('Curso Creado', 'success');
+          $route.reload();
         }, function error(response){
-          $scope.sms(response.data);
+          ngNotify.set(response.data, 'error');
           $route.reload();
         }
       );
@@ -40,10 +40,10 @@ angular.module('vista')
       };
       ViewActiv.editarCurso(data).then(
         function success(response) {
-          $scope.sms("Curso Editado");
+          ngNotify.set('Curso Editado', 'success');
           $route.reload();
         }, function error(response){
-          $scope.sms(response.data);
+          ngNotify.set(response.data, 'error');
           $route.reload();
         }
       );

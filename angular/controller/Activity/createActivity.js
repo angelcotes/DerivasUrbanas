@@ -1,5 +1,5 @@
 angular.module('vista')
-  .controller('createActivity', function ($timeout, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService) {
+  .controller('createActivity', function ($timeout, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, ngNotify) {
     $uibModalInstance.opened.then(function() {
       function initialize() {
         navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
@@ -37,7 +37,7 @@ angular.module('vista')
           google.maps.event.addListener(divMapa, 'click', function(event){
             var radius = document.getElementById('Radius').value;
             if (Number(radius) === 0) {
-              alert('Debe ingresar un valor para el radio');
+              ngNotify.set('debe ingresar un valor para el radio', 'error');
             } else{
               marker.setMap(null);
               cityCircle.setMap(null);
@@ -73,13 +73,13 @@ angular.module('vista')
       ViewActiv.crearActividad($scope.actividad, ids[0]).then(
         function success(response) {
           $route.reload();
-          alert('Actividad creada');
+          ngNotify.set('Actividad creada', 'error');
           $location.path("activity");
           $uibModalInstance.close('a');
         }, function error(response){
           $route.reload();
+          ngNotify.set('Usuario no autorizado', 'error');
           $location.path("activity");
-          alert('Usuario no autorizado');
           $uibModalInstance.close('a');
         }
       );
