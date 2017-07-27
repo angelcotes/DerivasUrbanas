@@ -1,5 +1,5 @@
 angular.module('vista')
-  .controller('reportCtrl', function ($timeout, $uibModalInstance, $scope, $uibModal, ViewActiv, $location, $route, StorageService, grupo) {
+  .controller('reportCtrl', function ($timeout, $uibModalInstance, $scope, $uibModal, ViewActiv, $location, $route, StorageService, grupo, ngNotify) {
     var marker = new google.maps.Marker();
     var cityCircle = new google.maps.Circle;
     var grupo = grupo;
@@ -46,11 +46,11 @@ angular.module('vista')
       ViewActiv.editarActividad(actividad).then(
         function success(response) {
           $route.reload();
-          alert('Actividad Editada');
+          ngNotify.set('Actividad editada', 'success');
           $route.reload();
         }, function error(response){
           $route.reload();
-          alert('Usuario no autorizado');
+          ngNotify.set(response.data.error, 'error');
         }
       );
       $uibModalInstance.close('a');
@@ -68,17 +68,18 @@ angular.module('vista')
               function success(response) {
                 $route.reload();
                 $(".cargando").hide();
-                alert("Documento guardado");
+                ngNotify.set('Documento guardado', 'success');
                 $uibModalInstance.close('a');
                 $(".archivo").show();
               }, function error(response){
+                ngNotify.set(response.data.error, 'error');
                 $route.reload();
                 $(".cargando").hide();
                 $(".archivo").show();
               }
             );
         } else{
-          alert('Documento creado fuera del tiempo permitido para esta actividad');
+          ngNotify.set('Documento creado fuera del tiempo permitido para esta actividad', 'info');
         };
         /*EXIF.getData(file, function() {
           console.log('Entre');
@@ -124,7 +125,7 @@ angular.module('vista')
           };
         }); */      
       }else{
-        alert('No puede subir archivos desde este enlace');
+        ngNotify.set('No se puede subir archivos desde este enlace', 'info');
       };
     };
     $scope.ruta = function(estudiante){
@@ -163,9 +164,9 @@ angular.module('vista')
       ViewActiv.eliminarDocumento(documento.id).then(
         function success(response) {
           $route.reload();
-          alert("Documento eliminado");
+          ngNotify.set('Documento eliminado', 'success');
         }, function error(response){
-          alert(response);
+          ngNotify.set(response.data.error, 'error');
           $route.reload();
         }
       );

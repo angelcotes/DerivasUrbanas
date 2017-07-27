@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('vista')
-  .controller('studentCtrl', function ($window, MyWorker, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService) {
+  .controller('studentCtrl', function ($window, MyWorker, $scope, $route, $uibModal, AuthService, activityService, $location, StorageService, ngNotify) {
     if (StorageService.get('dataCurso') != null) {
       activityService.mostrarActividades('users/' + StorageService.get('currentUser').id + '/courses/' + StorageService.get('dataCurso').id + '/students').then(
         function success(response) {
           $scope.estudiantes = response.data;
         }, function error(response) {
-          alert(response);
+          ngNotify.set(response.data.error, 'success');
         }
       );
     } else{
@@ -15,7 +15,7 @@ angular.module('vista')
         function success(response) {
           $scope.estudiantes = response.data;
         }, function error(response) {
-          alert(response);
+          ngNotify.set(response.data.error, 'success');
         }
       );
     };
@@ -38,9 +38,9 @@ angular.module('vista')
       activityService.EliminarActividad('courses/' + dataStudent.course.id + '/students/' + dataStudent.id).then(
         function success(response) {
           $route.reload();
-          alert('Estudiante eliminado');
+          ngNotify.set('Estudiante eliminado', 'success');
         }, function error(response) {
-          alert(response);
+          ngNotify.set(response.data.error, 'success');
         }
       );  
     };

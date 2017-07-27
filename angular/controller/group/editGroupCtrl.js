@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('editGroupCtrl', function ($window,$scope, $uibModal, AuthService, $route, activityService, $location, StorageService, grupo) {
+  .controller('editGroupCtrl', function ($window,$scope, $uibModal, AuthService, $route, activityService, $location, StorageService, grupo, ngNotify) {
     $scope.grupo = grupo;
     $scope.types = grupo.users_type;
     if (grupo.users_type == "Teacher") {
@@ -12,10 +12,28 @@ angular.module('vista')
           $scope.activity_id = response.data[0].activity_id;
           $scope.grupos = response.data;
         }, function error(response){
-          alert(response.data);
+          ngNotify.set(response.data.error, 'error');
         }
       );
     } else{
       
+    };
+
+    $scope.cancelar = function(){
+      $uibModalInstance.close('a');
+      $route.reload();
+    };
+    $scope.editarGrupo = function(grupo){
+      AuthService.editGroup(grupo, StorageService.get('dataActivity').course_nrc, StorageService.get('dataActivity').id).then(
+        function success(response) {
+          ngNotify.set('Grupo editado', 'success');
+          $uibModalInstance.close('a');
+          $route.reload();
+        }, function error(error){
+          ngNotify.set(error.data.error, 'error');
+          alert(error);
+        }
+      );
+
     };
 });

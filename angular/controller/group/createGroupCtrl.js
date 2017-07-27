@@ -1,23 +1,23 @@
 'use strict';
 
 angular.module('vista')
-  .controller('createGroupCtrl', function ($uibModalInstance, $scope, ViewActiv, $location, $route, StorageService) {
+  .controller('createGroupCtrl', function ($uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, ngNotify) {
     $scope.crearGrupoModal = function(){
       if (StorageService.get('dataCurso') != undefined && StorageService.get('dataActivity') != undefined){
         console.log($scope.grupo);
         ViewActiv.crearGrupo($scope.grupo).then(
           function success(response) {
-            alert('Grupo creado');
+            ngNotify.set('Grupo creado', 'success');
             $route.reload();
             $location.path("groups");
           }, function error(response){
             $route.reload();
-            alert('Usuario no autorizado');
+            ngNotify.set(response.data.error, 'error');
           }
         );
       }
       else{
-        alert('Grupo sin curso y actividad asignada');
+        ngNotify.set('Grupo sin curso y actividad asignado', 'info');
       }
       $uibModalInstance.close('a');
   	};

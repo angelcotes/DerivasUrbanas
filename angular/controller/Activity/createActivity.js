@@ -73,7 +73,7 @@ angular.module('vista')
       ViewActiv.crearActividad($scope.actividad, ids[0]).then(
         function success(response) {
           $route.reload();
-          ngNotify.set('Actividad creada', 'error');
+          ngNotify.set('Actividad creada', 'success');
           $location.path("activity");
           $uibModalInstance.close('a');
         }, function error(response){

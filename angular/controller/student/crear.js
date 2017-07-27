@@ -1,5 +1,5 @@
 angular.module('vista')
-  .controller('crear', function ($uibModal, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, AuthService) {
+  .controller('crear', function ($uibModal, $uibModalInstance, $scope, ViewActiv, $location, $route, StorageService, AuthService, ngNotify) {
     $scope.datafile = "";
     $scope.sms = function(dataSms){
       var modalInstance = $uibModal.open({
@@ -28,13 +28,13 @@ angular.module('vista')
     $scope.crearEstudiante = function(){
       if (StorageService.get('dataCurso') != null) {
         $scope.dataEmails = $scope.dataEmails.replace("\"", "");
-        $scope.sms('Los estudiantes han sido agregados, por favor espere mientras se envian las contraseñas a los estudiantes.');
+        ngNotify.set('Los estudiantes han sido agregados, por favor espere mientras se envian las contraseña a los estudiantes', 'success');
         $uibModalInstance.close('a');
         AuthService.addManyUsers($scope.dataEmails, StorageService.get('dataCurso').id).then(
           function success(response) {
             if (response.data.successful_data.length > 0) {
                 $route.reload();
-                $scope.sms('Proceso de inscripcion de estudiantes terminado.');
+                ngNotify.set('Proceso terminado', 'success');
             };
             if(response.data.error_data.length > 0){
               var error = "";
@@ -49,7 +49,7 @@ angular.module('vista')
         );
       } else{
         $route.reload();
-        $scope.sms('Los estudiantes que se desean inscribir no tienen un curso asociado.');
+        ngNotify.set('Los estudiantes no tienen curso asociado', 'info');
         $uibModalInstance.close('a');
       };
     };
@@ -57,10 +57,10 @@ angular.module('vista')
       ViewActiv.editarActividad(actividad).then(
         function success(response) {
           $route.reload();
-          $scope.sms('Actividad editada');
+          ngNotify.set('Actividad editada', 'success');
         }, function error(response){
           $route.reload();
-          $scope.sms('Usuario no autorizado');
+          ngNotify.set(response.data.error, 'error');
         }
       );
       $uibModalInstance.close('a');

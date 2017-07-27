@@ -81,5 +81,12 @@ angular.module('vista')
       }
     );
   };
+  authService.editGroup = function(grupo, idCurso, idActvidad){
+    return $http({
+      method: 'PUT',
+      url: BASE_URL + '/courses/' + idCurso + '/activities/' + idActvidad + '/groups/' + grupo.id,
+      data: grupo
+    })
+  };
   return authService;
 });

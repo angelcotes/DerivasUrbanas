@@ -2,7 +2,7 @@
 /*http://ec2-52-21-228-235.compute-1.amazonaws.com:3000/*/
 /*http://201.150.96.82:3002/*/
 angular.module('vista', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'ngMap', 'ngTagsInput', 'ngNotify'])
-.constant('BASE_URL', 'http://201.150.96.82:3002/')
+.constant('BASE_URL', 'http://localhost:3000/')
 .config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = "*";

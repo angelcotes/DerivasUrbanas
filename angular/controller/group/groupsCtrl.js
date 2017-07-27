@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('groupsCtrl', function ($window, MyWorker, $scope, $uibModal, AuthService, $route, activityService, $location, StorageService) {
+  .controller('groupsCtrl', function ($window, MyWorker, $scope, $uibModal, AuthService, $route, activityService, $location, StorageService, ngNotify) {
     $scope.types = StorageService.get('currentUser').users_type;
     MyWorker.prototype.verificar();
     if ($scope.types == 'Teacher') {
@@ -15,7 +15,7 @@ angular.module('vista')
               $scope.grupos = response.data;
             };
           }, function error(response){
-            alert(response.data);
+            ngNotify.set(response.data.error, 'error');
           }
         );
       } else{
@@ -28,7 +28,7 @@ angular.module('vista')
               $scope.grupos = response.data;
             };
           }, function error(response){
-            alert(response.data);
+            ngNotify.set(response.data.error, 'error');
           }
         );
       };
@@ -38,7 +38,7 @@ angular.module('vista')
           function success(response) {
             $scope.grupos = response.data;
           }, function error(response) {
-            
+            ngNotify.set(response.data.error, 'error');
           }
         );
       } else{
@@ -46,7 +46,7 @@ angular.module('vista')
           function success(response) {
             $scope.grupos = response.data;
           }, function error(response) {
-            alert(response);
+            ngNotify.set(response.data.error, 'success');
           }
         );
       };
@@ -74,6 +74,7 @@ angular.module('vista')
     $scope.editarGrupo = function(grupo){
       var modalInstance = $uibModal.open({
         templateUrl: 'partial_views/groups/editGroup.html',
+        controller: 'editGroupCtrl as editGr',
         resolve: {
           grupo: function(){
             return grupo
@@ -97,11 +98,11 @@ angular.module('vista')
       activityService.EliminarActividad('courses/' + dataGroup.course_nrc + '/activities/' + $scope.activity_id + '/groups/'+ dataGroup.id).then(
         function success(response) {
           $route.reload();
-          alert('Grupo eliminado');
+          ngNotify.set('Grupo Eliminado', 'success');
           $location.path('groups');
         }, function error(response) {
           $route.reload();
-          alert(response);
+          ngNotify.set(response.data.error, 'error');
         }
       );  
     };

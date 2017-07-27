@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-  .controller('addMembersCtrl', function ($window,$scope, $uibModalInstance, AuthService, $route, activityService, $location, StorageService, grupo) {
+  .controller('addMembersCtrl', function ($window,$scope, $uibModalInstance, AuthService, $route, activityService, $location, StorageService, grupo, ngNotify) {
     $scope.grupo = grupo;
     $scope.types = grupo.users_type;
     if (grupo.users_type == "Teacher") {
@@ -10,6 +10,7 @@ angular.module('vista')
           $scope.estudiantes = response.data.student_course;
           $scope.miembros = response.data.members_group;
         }, function error(response){
+          ngNotify.set(response.data.error, 'error');
           alert(response.data);
         }
       );
@@ -26,11 +27,11 @@ angular.module('vista')
       activityService.crear('users/'+StorageService.get('currentUser').id+'/members', $scope.miembros).then(
         function success(response){
           $uibModalInstance.close('a');
-          alert('Grupo modificado');
+          ngNotify.set('Grupo modificado', 'success');
           $route.reload();
         }, function error(response){
           $uibModalInstance.close('a');
-          alert(response.data.error);
+          ngNotify.set(response.data.error, 'error');
           $route.reload();
         }
       );
