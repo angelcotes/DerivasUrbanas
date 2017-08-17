@@ -91,5 +91,19 @@ angular.module('vista')
       headers: StorageService.get('headers')  
     })
   };
+  data_Credencial.verMarcadores = function(estudiante){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + 'users/' + estudiante.user_id + '/markers',
+      headers: StorageService.get('headers')
+    })
+  };
+  data_Credencial.verRelaciones = function(relacion_codigo){
+    return $http({
+      method: 'GET',
+      url: BASE_URL + 'users/' + relacion_codigo + '/relations',
+      headers: StorageService.get('headers')
+    })
+  }
   return data_Credencial;
 });

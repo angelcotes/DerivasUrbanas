@@ -1,0 +1,15 @@
+<div class="modal-body">
+	<div class="thumbnail">
+		<div class="caption">
+      <div ng-show="formatimage == 'image'">
+        <img ng-src="{{urlimage}}" style="width: 90%;">
+      </div>
+      <div ng-show="formataudio == 'audio'" style="width: 10%;">
+        <audio ng-src="{{urlaudio}}"></audio>
+      </div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="cancelar()">cerrar</button>
+</div>

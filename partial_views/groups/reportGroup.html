@@ -15,9 +15,15 @@
           <tbody class="datos">
             <tr  ng-repeat="estudiante in data_miembros">
               <td class="col-xs-2">{{estudiante.first_name}}</td>
-              <td class="col-xs-2">{{estudiante.rol}}</td>
-              <td class="col-xs-6"><i class="fa fa-spinner fa-spin cargando" style="font-size:24px; display:none;"></i><input class="archivo" type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files, angular.element(this).scope().estudiante)" style="width: 100%;"/></td>
-              <td class="col-xs-2"><a href="" class="btn btn-primary" role="button" ng-click="ruta(estudiante)"><i class="fa fa-map-marker" aria-hidden="true"></i></a></td>
+              <td class="col-xs-3">{{estudiante.rol}}</td>
+              <td class="col-xs-3">
+                <i class="fa fa-spinner fa-spin cargando" style="font-size:24px; display:none;"></i><button class="archivo" ngf-select="uploadFile($files, estudiante)" style="width: 100%;" multiple>Seleccionar Archivos</button>
+              </td>
+
+              <td class="col-xs-4">
+                <a href="" class="btn btn-primary" role="button" ng-click="ruta(estudiante)"><i class="fa fa-road" aria-hidden="true"></i></a>
+                <a href="" class="btn btn-success" role="button" ng-click="marcadores(estudiante)"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+              </td>
               
             </tr>
           </tbody>
@@ -35,7 +41,7 @@
             <tr  ng-repeat="documento in documentos">
               <td class="col-xs-4">{{documento.name}}</td>
               <td class="col-xs-4">{{documento.first_name}}</td>
-              <td class="col-xs-4"><a class="btn btn-info" role="button" ng-click="view(documento.url)"><i class="fa fa-eye" aria-hidden="true"></i></a> </td>
+              <td class="col-xs-4"><a class="btn btn-info" role="button" ng-click="view(documento)"><i class="fa fa-eye" aria-hidden="true"></i></a> </td>
             </tr>
           </tbody>
         </table>

@@ -21,7 +21,6 @@ angular.module('vista')
     else{
       ViewActiv.mostrarEstudianteCursos().then(
         function success(response) {
-          console.log(response);
           $scope.cursos = response.data;
         }, function error(response) {
           ngNotify.set(response.data, 'error');

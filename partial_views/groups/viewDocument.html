@@ -1,14 +1,13 @@
 <div class="modal-body">
 	<div class="thumbnail">
 		<div class="caption">
-      <h2>{{format}}</h2>
-      <div ng-show="format == 'jpg' || format == 'png'">
+      <div ng-show="format == 'image'">
         <img ng-src="{{url}}" style="width: 100%;">
       </div>
-      <div ng-show="format == 'mp4'">
-        <video ng-src="{{url}}" style="width: 100%;"></video>
+      <div ng-show="format == 'text'">
+        <texto ng-src="{{url}}" style="width: 100%;"></texto>
       </div>
-      <div ng-show="format == 'mp3' || format == 'wav'">
+      <div ng-show="format == 'audio'">
         <audio ng-src="{{url}}"></audio>
       </div>
 		</div>

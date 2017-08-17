@@ -1,12 +1,12 @@
 angular.module('vista')
-  .controller('reportCtrl', function ($timeout, $uibModalInstance, $scope, $uibModal, ViewActiv, $location, $route, StorageService, grupo, ngNotify) {
+  .controller('reportCtrl', function (Upload, $timeout, $uibModalInstance, $scope, $uibModal, ViewActiv, $location, $route, StorageService, grupo, ngNotify) {
     var marker = new google.maps.Marker();
     var cityCircle = new google.maps.Circle;
     var grupo = grupo;
+    var divMapa = document.getElementById('map-canvas');
     $uibModalInstance.opened.then(function() {
       function initialize() {
         navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
-        var divMapa = document.getElementById('map-canvas');
         $(".cargando").hide();
         var data_time = new Date();
         function fn_error(){
@@ -30,13 +30,47 @@ angular.module('vista')
                 center: {lat: latitud, lng: longitud},
                 zoom: 17
               });
+            }, function error(response){
+              var marker = new google.maps.Marker;
+              var cityCircle = new google.maps.Circle;
+              var latitud = respuesta.coords.latitude;
+              var longitud = respuesta.coords.longitude;
+              var citymap = {
+                area_work: {
+                  center: {lat: latitud, lng: longitud}
+                }
+              };
+              divMapa = new google.maps.Map(document.getElementById('map-canvas'), {
+                center: {lat: latitud, lng: longitud},
+                zoom: 17
+              });
+              ngNotify.set(response.data.sms, 'error');
             }
           );              
-        } 
+        }
+        $scope.markerPos = function(){
+          google.maps.event.addListener(marker, 'click', function(event){
+            ViewActiv.verRelaciones(marker.relation).then(
+              function success(response){
+                var modalInstance = $uibModal.open({
+                  templateUrl: 'partial_views/groups/viewDocumentRelation.html',
+                  controller: 'viewRelationCtrl as ViewFile',
+                  resolve: {
+                    data: function(){
+                      return response.data
+                    }
+                  }
+                })
+              }, function error(response){
+                ngNotify.set(response.data.error, 'error');
+              }
+            );
+          });
+        }; 
       }
       $timeout(function() {
         initialize()
-       }, 1000);;
+       }, 1000);
     });
     $scope.cancelar = function(){
       $route.reload();
@@ -56,75 +90,68 @@ angular.module('vista')
       $uibModalInstance.close('a');
     };
     $scope.uploadFile = function(files, estudiante) {
-      var file = files[0];
       //Take the first selected file
       if (estudiante.user_id == StorageService.get('currentUser').id) {
-        $(".archivo").hide();
-        $(".cargando").show();
-        var fd = new FormData();
-        fd.append("file", file);
-        if (new Date(file.lastModified) >= new Date(estudiante.time_start) && new Date(file.lastModified) <= new Date(estudiante.time_finished)) {
-            ViewActiv.guardarDocumento(fd, grupo).then(
-              function success(response) {
-                $route.reload();
+        if(files.length <= 2){
+          $(".archivo").hide();
+          $(".cargando").show();
+          var indexFiles = 0;
+          var fd = new FormData();
+          angular.forEach(files, function(file) {
+            EXIF.getData(file, function() {
+              var MetaData = EXIF.getAllTags(file);
+              if (MetaData.GPSLatitude != undefined && MetaData.GPSLongitude != undefined ) {
+                var latitude = [];
+                var longitude = [];
+                latitude = MetaData.GPSLatitude;
+                longitude = MetaData.GPSLongitude;
+                var latRef = MetaData.GPSLatitudeRef || "N";  
+                var lonRef = MetaData.GPSLongitudeRef || "W";
+                latitude = (latitude[0] + latitude[1]/60 + latitude[2]/3600) * (latRef == "N" ? 1 : -1);  
+                longitude = (longitude[0] + longitude[1]/60 + longitude[2]/3600) * (lonRef == "W" ? -1 : 1); 
+                var pointA = new google.maps.LatLng(latitude, longitude);
+                var pointB = new google.maps.LatLng(parseFloat(estudiante.latitude), parseFloat(estudiante.longitude));
+                var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
+                if (distanceBetweenPoints <= parseFloat(estudiante.range)  && file.lastModifiedDate >= new Date(estudiante.time_start) && file.lastModifiedDate <= new Date(estudiante.time_finished)) {
+                  indexFiles++;
+                  var dataFile = "@" + latitude  + "@" + longitude + "@" + file.type + "@" + file.name + "@";
+                  fd.append("file[]", file, dataFile);
+                } else{
+                  $(".cargando").hide();
+                  $(".archivo").show();
+                  ngNotify.set('Documento creado fuera del tiempo permitido para esta actividad', 'info');
+                };
+              } else if (file.lastModifiedDate >= new Date(estudiante.time_start) && file.lastModifiedDate <= new Date(estudiante.time_finished)) {
+                  indexFiles++;
+                  var dataFile = "@nil@nil@" + file.type + "@" + file.name + "@";
+                  fd.append("file[]", file, dataFile);
+              } else{
                 $(".cargando").hide();
-                ngNotify.set('Documento guardado', 'success');
-                $uibModalInstance.close('a');
                 $(".archivo").show();
-              }, function error(response){
-                ngNotify.set(response.data.error, 'error');
-                $route.reload();
-                $(".cargando").hide();
-                $(".archivo").show();
-              }
-            );
-        } else{
-          ngNotify.set('Documento creado fuera del tiempo permitido para esta actividad', 'info');
-        };
-        /*EXIF.getData(file, function() {
-          console.log('Entre');
-          //var MetaData = EXIF.getAllTags(file);
-          if (MetaData.GPSLatitude != undefined && MetaData.GPSLongitude != undefined ) {
-            var latitude = [];
-            var longitude = [];
-            latitude = MetaData.GPSLatitude;
-            longitude = MetaData.GPSLongitude;
-            var latRef = MetaData.GPSLatitudeRef || "N";  
-            var lonRef = MetaData.GPSLongitudeRef || "W";
-            latitude = (latitude[0] + latitude[1]/60 + latitude[2]/3600) * (latRef == "N" ? 1 : -1);  
-            longitude = (longitude[0] + longitude[1]/60 + longitude[2]/3600) * (lonRef == "W" ? -1 : 1); 
-            var pointA = new google.maps.LatLng(latitude, longitude);
-            var pointB = new google.maps.LatLng(parseFloat(estudiante.latitude), parseFloat(estudiante.longitude));
-            var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
-            if (distanceBetweenPoints <= parseFloat(estudiante.range)  && binary_reader.file.lastModifiedDate >= new Date(estudiante.time_start) && binary_reader.file.lastModifiedDate <= new Date(estudiante.time_finished)) {
-              ViewActiv.guardarDocumento(fd, grupo).then(
-                function success(response) {
-                  $uibModalInstance.close('a');
-                  $route.reload();
-                  alert("Documento guardado");
-                }, function error(response){
-                  alert(response);
-                  $route.reload();
-                }
-              );
-            } else{
-              alert('Documento creado fuera del tiempo permitido para esta actividad');
-            };
-          } else if (file.lastModifiedDate >= new Date(estudiante.time_start) && file.lastModifiedDate <= new Date(estudiante.time_finished)) {
-              ViewActiv.guardarDocumento(fd, grupo).then(
-                function success(response) {
-                  $route.reload();
-                  alert("Documento guardado");
-                }, function error(response){
-                  $route.reload();
-                }
-              );
-              $uibModalInstance.close('a');
-          } else{
-            alert('Documento creado fuera del tiempo permitido para esta actividad');
-          };
-        }); */      
+                ngNotify.set('Documento creado fuera del tiempo permitido para esta actividad', 'info');
+              };
+              if (indexFiles == files.length) {
+                ViewActiv.guardarDocumento(fd, grupo).then(
+                  function success(response) {
+                    $uibModalInstance.close('a');
+                    $route.reload();
+                    ngNotify.set('Documento(s) guardado(s)', 'success');
+                  }, function error(response){
+                    ngNotify.set(response, 'error');
+                    $route.reload();
+                  }
+                );
+              }; 
+            });
+          });
+        }else{
+          $(".cargando").hide();
+          $(".archivo").show();
+          ngNotify.set('Solo se pueden enlazar dos archivos', 'info');
+        }      
       }else{
+        $(".cargando").hide();
+        $(".archivo").show();
         ngNotify.set('No se puede subir archivos desde este enlace', 'info');
       };
     };
@@ -149,7 +176,6 @@ angular.module('vista')
       });
     };
     $scope.view = function(data){
-      console.log(data);
       var modalInstance = $uibModal.open({
         templateUrl: 'partial_views/groups/viewDocument.html',
         controller: 'viewDocCtrl as ViewFile',
@@ -172,4 +198,20 @@ angular.module('vista')
       );
       $uibModalInstance.close('a');
     };
+    $scope.marcadores = function(estudiante){
+      ViewActiv.verMarcadores(estudiante).then(
+        function success(response){
+          angular.forEach(response.data, function(value){
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(value.latitude, value.longitude),
+              map: divMapa,
+              relation: value.relation
+            });
+          });
+        }, function error(response){
+          ngNotify.set(response.data.error, 'error');
+          $route.reload();
+        }
+      );
+    }
 });

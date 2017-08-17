@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vista')
-.factory('MyWorker', function($interval, activityService, StorageService, $rootScope) {
+.factory('MyWorker', function($interval, activityService, StorageService, $rootScope, ngNotify) {
     var _worker;
     var date;
     var firebaseRef = firebase.database().ref();
@@ -13,7 +13,7 @@ angular.module('vista')
             $interval(function () {
                 navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
                 function fn_error(){
-                  alert('Debe activar el GPS');
+                    ngNotify.set('Debe activar el GPS', 'error');
                 }
                 function fn_ok(respuesta){
                     var date1 = new Date();
@@ -32,7 +32,7 @@ angular.module('vista')
     MyWorker.prototype.start = function(actividad) {
         navigator.geolocation.getCurrentPosition( fn_ok, fn_error);
         function fn_error(){
-          alert('Para poder iniciar la actividad debe activar el GPS');
+            ngNotify.set('Para poder ver la actividad debe actividad el GPS', 'error');
         }
         function fn_ok(respuesta){
             var date1 = new Date();
@@ -40,7 +40,7 @@ angular.module('vista')
             var pointB = new google.maps.LatLng(parseFloat(actividad.latitude), parseFloat(actividad.longitude));
             var distanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
             if (distanceBetweenPoints >= parseFloat(actividad.range)) {
-                console.log('Se encuentra fuera del area de trabajo');
+                ngNotify.set('Se encuentra fuera del area de trabajo', 'success');
             } else{
                 if (date == undefined) {
                     activityService.iniciarActividad(actividad, "ejecutar", date1).then(
@@ -52,12 +52,11 @@ angular.module('vista')
                             date1 = new Date();
                             if (date >= date1) {
                                 MyWorker.prototype.verificar();
-                                alert("La actividad empezó");
+                                ngNotify.set('La actividad empezó', 'success');
                                 firebaseRef.child("User_id_" + StorageService.get('currentUser').id).child("Act_id_" + actividad.id).push().set({Latitud: respuesta.coords.latitude, Longitud: respuesta.coords.longitude, Fecha: date1});
                             };
-                            console.log(response);
                         }, function error(response) {
-                            console.log(response.data.sms);
+                            ngNotify.set(response.data.sms, 'success');
                         }
                     );
                     firebaseRef.child("User_id_" + StorageService.get('currentUser').id).child("Act_id_" + actividad.id).push().set({Latitud: respuesta.coords.latitude, Longitud: respuesta.coords.longitude, Fecha: date1});
